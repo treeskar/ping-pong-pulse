@@ -1,0 +1,88 @@
+app-timeline {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  overflow: hidden;
+
+  svg {
+    cursor: pointer;
+  }
+
+  .bar {
+    stroke-width: 10px;
+
+    &.idle {
+      stroke: #eee;
+    }
+
+    &.playing {
+      stroke: #333;
+    }
+  }
+
+  .response {
+    position: absolute;
+    left: 100px;
+  }
+
+  $axisColor: rgba(0,0,0,.5);
+
+  .axis {
+    font: 9px Arial;
+    font-weight: 200;
+    pointer-events: none;
+
+    .domain {
+      stroke: transparent;
+    }
+
+    .tick {
+      pointer-events: none;
+    }
+
+    .tick line {
+      stroke: $axisColor;
+    }
+
+    .tick text {
+      fill: $axisColor;
+    }
+  }
+
+  .axis .tick line {
+    stroke: $axisColor;
+  }
+
+  .marker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    margin-top: -5px;
+    transition: .05s linear transform;
+    pointer-events: none;
+    user-select: none;
+
+    &:before {
+      content: '';
+      display: block;
+      vertical-align: middle;
+      border-top: 1px solid red;
+      flex-grow: 1;
+    }
+
+    .label {
+      display: block;
+      font-size: 10px;
+      padding: 0 5px;
+      color: $axisColor;
+      font-family: Arial, sans-serif;
+      background-color: #eee;
+    }
+  }
+}

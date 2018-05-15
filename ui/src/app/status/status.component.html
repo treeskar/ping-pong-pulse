@@ -1,0 +1,14 @@
+<ng-container *ngIf="isNow; then currentStatus else previousStatus"></ng-container>
+
+<ng-template #currentStatus>
+  <p class="status-label">The current status is:</p>
+  <span class="game-status">{{ status | pingStatus }}</span>
+</ng-template>
+
+<ng-template #previousStatus>
+  <p class="status-label">
+    The status at <time class="status-time">{{date}}</time> was:
+  </p>
+  <span class="game-status">{{ status | pingStatus }}</span>
+  <button (click)="goBack()" class="button">Back</button>
+</ng-template>

@@ -1,0 +1,35 @@
+@import "../sass/mixin";
+
+:host {
+  @include flex-container();
+}
+
+.page {
+  @include flex-container(row);
+  justify-content: center;
+  align-items: center;
+
+  .page-column {
+    flex-grow: 1;
+  }
+
+  .column-content {
+    padding-left: 50px;
+    text-align: left;
+  }
+}
+
+@media (max-width: 1024px) {
+  .page {
+    flex-direction: column;
+
+    .page-column {
+      flex-grow: initial;
+    }
+
+    .column-content {
+      padding-left: 0;
+      text-align: center;
+    }
+  }
+}

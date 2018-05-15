@@ -1,0 +1,35 @@
+@import "../../sass/mixin";
+
+:host {
+  text-align: right;
+  color: #999;
+  font-size: 12px;
+  padding: 10px;
+}
+
+.content-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.footer-content-item {
+
+  $lineSize: 20px;
+  line-height: $lineSize;
+
+  &:after {
+    content: '';
+    display: inline;
+    height: $lineSize;
+    border-right: 1px solid #ddd;
+    margin: 0 5px;
+  }
+
+  &:nth-last-child(1) {
+    &:after {
+      display: none;
+    }
+  }
+}
+

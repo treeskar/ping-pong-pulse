@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~normalize-scss/sass/_normalize";
+// @import url('https://fonts.googleapis.com/css?family=Anton');
+@import url('https://fonts.googleapis.com/css?family=Bungee+Inline');
+@import "sass/mixin";
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  @include flex-container();
+}
+
+body {
+  background-color: #eee;
+}
+
+.content-container {
+  margin: 0 auto;
+  max-width: 980px;
+  width: 100%;
+}

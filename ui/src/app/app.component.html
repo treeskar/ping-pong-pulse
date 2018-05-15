@@ -1,0 +1,12 @@
+<div class="page content-container">
+  <section class="page-column">
+    <app-ping-pong [status]="status$ | async"></app-ping-pong>
+  </section>
+  <section class="page-column column-content">
+    <app-header></app-header>
+    <app-status [status]="status$ | async" [date]="date$ | async"></app-status>
+  </section>
+</div>
+<app-timeline></app-timeline>
+<app-footer></app-footer>
+

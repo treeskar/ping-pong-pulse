@@ -1,0 +1,12 @@
+@mixin flex-container($direction: column) {
+  display: flex;
+  flex-direction: $direction;
+  flex-grow: 1;
+}
+
+@mixin polygon-section($angle, $fromColor, $toColor) {
+  background-image: linear-gradient(to bottom left, $fromColor, $toColor);
+  clip-path: polygon(0 0, 100% $angle, 100% 100%, 0% 100%);
+  shape-outside: polygon(0 0, 100% $angle, 100% 100%, 0% 100%);
+  margin-top: -$angle;
+}

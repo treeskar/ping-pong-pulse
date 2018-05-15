@@ -1,0 +1,122 @@
+@import "../../sass/mixin";
+@import "../../sass/varaibles";
+
+:host {
+  color: rgba(0,0,0,1);
+}
+
+.title {
+  font-family: 'Bungee Inline', cursive;
+  font-weight: 400;
+  font-size: 64px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+
+  small {
+    font-family: cursive;
+    font-weight: 200;
+    font-size: 24px;
+    transform: translate(-50%, 30px);
+  }
+}
+
+$ping-pong-ball-size: 45px;
+
+.ping-pong-ball {
+  display: inline-block;
+  width: $ping-pong-ball-size;
+  height: $ping-pong-ball-size;
+  border-radius: 50%;
+  // background-image: radial-gradient(#fff, #666);
+  background: #fff;
+  margin: $ping-pong-ball-size * 0.1;
+  border: 1px solid currentColor;
+}
+
+.description {
+  color: rgba(0,0,0,.5);
+  font-family: $defaultFontFamily;
+  font-size: 16px;
+}
+
+@media (max-width: 1024px) {
+  .title {
+    justify-content: center;
+  }
+
+  .description {
+    line-height: 1.5;
+    margin: 15px 50px 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 54px;
+
+    small {
+      font-size: 21px;
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .title {
+    font-size: 44px;
+
+    small {
+      font-size: 18px;
+    }
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  $ping-pong-ball-size: 35px;
+
+  .ping-pong-ball {
+    width: $ping-pong-ball-size;
+    height: $ping-pong-ball-size;
+    margin: $ping-pong-ball-size * 0.1;
+  }
+}
+
+@media (max-width: 430px) {
+  .title {
+    font-size: 34px;
+
+    small {
+      font-size: 19px;
+      transform: translate(-50%, 20px);
+    }
+  }
+
+  $ping-pong-ball-size: 25px;
+
+  .ping-pong-ball {
+    width: $ping-pong-ball-size;
+    height: $ping-pong-ball-size;
+    margin: $ping-pong-ball-size * 0.1;
+  }
+}
+
+@media (max-width: 360px) {
+  .title {
+    font-size: 26px;
+
+    small {
+      font-size: 16px;
+      transform: translate(-50%, 18px);
+    }
+  }
+
+  $ping-pong-ball-size: 20px;
+
+  .ping-pong-ball {
+    width: $ping-pong-ball-size;
+    height: $ping-pong-ball-size;
+    margin: $ping-pong-ball-size * 0.1;
+  }
+}

@@ -1,0 +1,63 @@
+@import "../../sass/varaibles";
+
+.status-label {
+  font-size: 35px;
+  font-family: $defaultFontFamily;
+  margin: 0 0 15px;
+}
+
+.game-status {
+  display: block;
+  font-size: 24px;
+  margin: 0 0 15px;
+  font-family: $defaultFontFamily;
+}
+
+.status-time {
+  font-size: 75%;
+  background: rgba(0,0,0,1);
+  padding: 5px;
+  color: #fff;
+  font-weight: 100;
+  font-family: sans-serif;
+}
+
+.button {
+  border: 1px solid #333;
+  border-radius: 20px;
+  background-color: rgba(0,0,0,0);
+  color: #333;
+  font-size: 16px;
+  padding: 0 20px;
+  line-height: 2;
+  cursor: pointer;
+  transition: .3s linear background-color, .3s linear color;
+  outline: none;
+
+  &:hover,
+  &:active {
+    background-color: rgba(0,0,0,8);
+    color: #eee;
+  }
+}
+
+@media (max-width: 600px) {
+  .status-label {
+    font-size: 26px;
+  }
+
+  .game-status {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 400px) {
+  .status-label {
+    font-size: 18px;
+    margin: 0 0 10px;
+  }
+
+  .game-status {
+    font-size: 16px;
+  }
+}

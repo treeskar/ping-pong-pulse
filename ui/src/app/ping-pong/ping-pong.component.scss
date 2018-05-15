@@ -1,0 +1,283 @@
+:host {
+  margin: auto;
+  width: 300px;
+  display: block;
+}
+
+@keyframes wiggle {
+
+  0% {
+    transform: translate(790px,-60px);
+  }
+
+  10% {
+    transform: translate(770px,-65px);
+  }
+
+  20% {
+    transform: translate(745px,-62px);
+  }
+
+  30% {
+    transform: translate(824px,-68px);
+  }
+
+  40% {
+    transform: translate(770px,-60px);
+  }
+
+  50% {
+    transform: translate(790px,-107px);
+  }
+
+  60% {
+    transform: translate(770px,-87px);
+  }
+
+  70% {
+    transform: translate(810px,-77px);
+  }
+
+  80% {
+    transform: translate(790px,-97px);
+  }
+
+  90% {
+    transform: translate(720px,-77px);
+  }
+
+  100% {
+    transform: translate(790px,-60px);
+  }
+
+}
+
+
+@keyframes wiggletwo {
+
+  0% {
+    transform: translate(0px,-100px);
+  }
+
+  10% {
+    transform: translate(10px,-70px);
+  }
+
+  20% {
+    transform: translate(15px,-90px);
+  }
+
+  30% {
+    transform: translate(5px,-100px);
+  }
+
+  40% {
+    transform: translate(10px,-60px);
+  }
+
+  50% {
+    transform: translate(45px,-50px);
+  }
+
+  60% {
+    transform: translate(0px,-100px);
+  }
+
+  70% {
+    transform: translate(20px,-20px);
+  }
+
+  80% {
+    transform: translate(40px,-80px);
+  }
+
+  90% {
+    transform: translate(15px,-60px);
+  }
+
+  100% {
+    transform: translate(0px,-100px);
+  }
+
+}
+
+@keyframes hideshow {
+  0% {
+    transform: translate(0px,-40px);
+  }
+
+  10% {
+    transform: translate(230px,100px);
+  }
+
+  20% {
+    transform: translate(420px,-80px);
+  }
+
+  30% {
+    transform: translateY(450px,-86px);
+  }
+
+  32% {
+    transform: translateY(450px,-83px);
+  }
+
+  40% {
+    transform: translate(650px,90px);
+  }
+
+  50% {
+    transform: translate(750px,-40px);
+  }
+
+  60% {
+    transform: translate(600px,100px);
+  }
+
+  70% {
+    transform: translateY(495px,-90px);
+  }
+
+  80% {
+    transform: translate(330px,-30px);
+  }
+
+  90% {
+    transform: translate(200px,100px);
+  }
+
+  100% {
+    transform: translate(0px,-40px);
+  }
+
+}
+
+@keyframes pingPong {
+  0% {
+    transform: translate(20px, 20px);
+  }
+
+  50% {
+    transform: translate(20px, -130px);
+  }
+
+  100% {
+    transform: translate(20px, 20px);
+  }
+}
+
+@keyframes pingPongPaddle {
+  0% {
+    transform: rotate(25deg) translate(23px, -100px);
+  }
+
+  20% {
+    transform: rotate(20deg) translate(23px, -100px);
+  }
+
+  80% {
+    transform: rotate(20deg) translate(23px, -100px);
+  }
+
+  100% {
+    transform: rotate(25deg) translate(23px, -100px);
+  }
+}
+
+@keyframes idleBall {
+  0% {
+    transform: translate(30px, 92px);
+  }
+
+  50% {
+    transform: translate(50px, 92px);
+  }
+
+  100% {
+    transform: translate(30px, 92px);
+  }
+
+}
+
+.playing {
+
+  $gameSpeed: 2.8s;
+
+  .ball {
+    animation: hideshow $gameSpeed linear infinite;
+  }
+
+  .right_paddle {
+    animation: wiggle $gameSpeed linear infinite;
+  }
+
+  .left_paddle {
+    animation : wiggletwo $gameSpeed linear infinite;
+  }
+}
+
+.idle {
+
+  .ball {
+    animation: idleBall 2s linear infinite;
+  }
+
+  .right_paddle, .left_paddle {
+    display: none;
+  }
+
+}
+
+.loading {
+
+  $pingSpeed: 1s;
+
+  .ball {
+    animation: pingPong $pingSpeed linear infinite;
+  }
+
+  .right_paddle {
+    display: none;
+  }
+
+  .left_paddle {
+    animation: pingPongPaddle $pingSpeed linear infinite;
+  }
+}
+
+svg .ball {
+  fill: #fff;
+}
+
+.ball_idle {
+  display: none;
+}
+
+svg {
+  transform: translateY(-45px);
+  fill: none;
+  stroke: #000;
+  stroke-width: 2px;
+}
+
+.ping-pong-table {
+  transform: translate(0px, 200px);
+}
+
+@media (max-width: 1024px) {
+  :host {
+    margin-top: 45px;
+  }
+}
+
+@media (max-width: 520px) {
+  :host {
+    width: 250px;
+  }
+}
+
+@media (max-width: 400px) {
+  :host {
+    width: 200px;
+  }
+}
