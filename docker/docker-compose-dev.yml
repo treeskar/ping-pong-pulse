@@ -1,0 +1,18 @@
+version: "2.3"
+services:
+  api:
+    image: node
+    working_dir: /home/api
+    command: "npm run watch"
+    volumes:
+      - ../api:/home/api
+    expose:
+      - 8999
+    ports:
+      - 8999:8999
+  mongo:
+    image: mongo
+    volumes:
+      - ./db:/data/db
+    ports:
+      - 27017:27017

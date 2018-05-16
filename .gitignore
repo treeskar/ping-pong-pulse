@@ -1,0 +1,6 @@
+.idea
+.idea/vcs.xml
+.DS_Store
+docker/db
+dist
+node_modules
