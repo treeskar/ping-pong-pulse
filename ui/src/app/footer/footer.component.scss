@@ -3,6 +3,7 @@
 :host {
   text-align: right;
   color: #999;
+  font-family: Arial, sans-serif;
   font-size: 12px;
   padding: 10px;
 }
@@ -31,5 +32,9 @@
       display: none;
     }
   }
+}
+
+.pan-logo {
+  width: 100px;
 }
 
