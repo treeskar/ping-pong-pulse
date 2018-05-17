@@ -27,5 +27,5 @@ docker push pingpongpulse/api:latest
 docker push pingpongpulse/nginx:${VERSION}
 docker push pingpongpulse/nginx:latest
 echo "Deploying"
-cd ansible
-ansible-playbook -v -i prod.hosts  playbook.yml
+cd ../ansible
+ansible-playbook -v -i prod.hosts playbook.yml
