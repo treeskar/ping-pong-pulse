@@ -1,2 +1,0 @@
-[app]
-ppp ansible_ssh_host=66.23.225.231 ansible_user=root

@@ -3,6 +3,7 @@ import * as jwt from 'jsonwebtoken';
 import { broadcastPulse } from './websocket';
 import { PingGlobal } from './global';
 import config from './config';
+import { logger } from './logger';
 
 declare const global: PingGlobal;
 
@@ -57,6 +58,7 @@ function authenticateMiddleware(req: Request, res: Response, next: Function) {
 
 function savePulseController(req: Request, res: Response) {
   global.PingModel.savePulse(req.body.pulse);
+  logger.info(`Got pulse state: ${req.body.pulse}`);
   broadcastPulse(req.body.pulse);
   res.send('Pong');
 }
@@ -71,7 +73,7 @@ const apiRoutes = Router();
 
 apiRoutes.get('/ping', (req, res) => res.send('Pong'));
 apiRoutes.post('/authenticate', authenticateController);
-apiRoutes.post('/pulse', authenticateMiddleware, savePulseController);
+apiRoutes.post('/pulse', savePulseController);
 apiRoutes.get('/stats', getStatsController);
 
 export { apiRoutes }

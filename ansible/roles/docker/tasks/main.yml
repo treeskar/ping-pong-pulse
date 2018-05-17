@@ -1,9 +1,22 @@
-- name: Doker is present
-  apt: name=docker.io state=present
-  tags: [docker]
-- name: Python-pip is present
-  apt: name=python-pip state=present
-  tags: [docker]
-- name: Docker-py is present
-  pip: name=docker-py version=0.4.0 state=present
-  tags: [docker]
+- name: Nginx is running
+  tags: ['docker']
+  service:
+    name: nginx
+    state: started
+- name: Install yum-utils
+  tags: ['docker']
+  yum:
+    name: yum-utils
+    state: latest
+- name: Install lvm2
+  tags: ['docker']
+  yum:
+    name: lvm2
+    state: latest
+- name: add mongo repo centos
+  tags: ['centos']
+  yum_repository:
+    name: Docker
+    description: Docker Repository
+    baseurl: https://download.docker.com/linux/centos/docker-ce.repo
+
