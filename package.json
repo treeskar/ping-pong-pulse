@@ -1,0 +1,17 @@
+{
+  "name": "ping-pong-pulse",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "sh start-dev.sh",
+    "prod": "sh start-prod.sh",
+    "deploy": "sh deploy.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@crgitep:7999/hac/pingpongpulse.git"
+  },
+  "author": "",
+  "license": "MIT"
+}
