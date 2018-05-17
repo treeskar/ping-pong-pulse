@@ -1,9 +1,9 @@
 {
   "name": "ui",
-  "version": "0.1.0",
-  "repository" : {
-    "type" : "git",
-    "url" : "ssh://git@crgitep:7999/ap/front-end.git"
+  "version": "0.1.1",
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@crgitep:7999/ap/front-end.git"
   },
   "scripts": {
     "ng": "ng",

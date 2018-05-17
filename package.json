@@ -6,6 +6,9 @@
   "scripts": {
     "start": "sh start-dev.sh",
     "prod": "sh start-prod.sh",
+    "release:patch": "bumped release patch && npm run deploy",
+    "release:minor": "bumped release minor && npm run deploy",
+    "release:main": "bumped release main && npm run deploy",
     "deploy": "sh deploy.sh"
   },
   "repository": {

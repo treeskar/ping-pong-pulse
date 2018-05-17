@@ -1,13 +1,13 @@
-VERSION=$1
+VERSION=$(jq -r ".version" package.json)
 DOCKER_USER="pingpongpulse"
 DOCKER_PASS="Pin9P0ngPu|se"
-echo ${VERSION}
-echo "Building API"
+
+echo "Building API v${VERSION}"
 cd api
 rm -rf dist/*
 npm run build-ts
 cd ../
-echo "Building UI"
+echo "Building UI v${VERSION}"
 cd ui
 rm -rf dist/*
 ng build --prod --build-optimizer --aot
@@ -21,11 +21,11 @@ docker tag pingpongpulse_api pingpongpulse/api:${VERSION}
 docker tag pingpongpulse_api pingpongpulse/api:latest
 docker tag pingpongpulse_nginx pingpongpulse/nginx:${VERSION}
 docker tag pingpongpulse_nginx pingpongpulse/nginx:latest
-echo "Publishing"
+echo "Publishing v${VERSION}"
 docker push pingpongpulse/api:${VERSION}
 docker push pingpongpulse/api:latest
 docker push pingpongpulse/nginx:${VERSION}
 docker push pingpongpulse/nginx:latest
-echo "Deploying"
+echo "Deploying v${VERSION}"
 cd ../ansible
 ansible-playbook -v -i prod.hosts playbook.yml
