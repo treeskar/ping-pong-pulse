@@ -9,8 +9,8 @@ npm run build-ts
 cd ../
 echo "Building UI"
 cd ui
-#rm -rf dist/*
-#ng build --prod --build-optimizer --aot
+rm -rf dist/*
+ng build --prod --build-optimizer --aot
 cd ../docker
 
 # rebuild containers
@@ -26,3 +26,6 @@ docker push pingpongpulse/api:${VERSION}
 docker push pingpongpulse/api:latest
 docker push pingpongpulse/nginx:${VERSION}
 docker push pingpongpulse/nginx:latest
+echo "Deploying"
+cd ansible
+ansible-playbook -v -i prod.hosts  playbook.yml

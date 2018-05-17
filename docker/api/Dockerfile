@@ -1,4 +1,4 @@
-FROM node
+FROM node:alpine
 WORKDIR /usr/src/api
 COPY /api/package*.json ./
 RUN npm config set strict-ssl false

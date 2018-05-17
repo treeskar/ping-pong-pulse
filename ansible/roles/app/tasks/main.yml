@@ -1,5 +1,6 @@
 - name: Login to docker hub
   tags: ['app']
+  become: true
   docker_login:
     email: "afaitelson@paloaltonetworks.com"
     username: "pingpongpulse"
@@ -7,22 +8,23 @@
 
 - name: start containers
   tags: ['app']
+  become: true
   docker_service:
     project_name: pingpongpulse
     definition:
       version: "2.3"
       services:
-        nginx:
-          image: pingpongpulse/nginx
-          ports:
-            - "80:80"
-            - "443:443"
-        api:
-          image: pingpongpulse/api
-          ports:
-            - "8999:8999"
         mongo:
           image: mongo
           restart: always
           ports:
             - "27017:27017"
+        api:
+          image: pingpongpulse/api
+          ports:
+            - "8999:8999"
+        nginx:
+          image: pingpongpulse/nginx
+          ports:
+            - "80:80"
+            - "443:443"

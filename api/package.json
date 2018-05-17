@@ -2,6 +2,10 @@
   "name": "ping-pong-pule-api",
   "version": "1.0.0",
   "description": "Ping Pong Pulse API",
+  "repository" : {
+    "type" : "git",
+    "url" : "ssh://git@crgitep:7999/ap/front-end.git"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
