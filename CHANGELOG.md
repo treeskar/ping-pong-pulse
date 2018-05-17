@@ -1,3 +1,10 @@
+<a name="0.1.2"></a>
+## <small>0.1.2 (2018-05-17)</small>
+
+* [+] Deploy: add release scripts to package json ([0bf7aaa](http://crgitep:7999/hac/pingpongpulse/commits/0bf7aaa))
+
+
+
 <a name="0.1.1"></a>
 ## <small>0.1.1 (2018-05-17)</small>
 
