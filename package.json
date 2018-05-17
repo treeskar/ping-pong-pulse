@@ -13,5 +13,8 @@
     "url": "ssh://git@crgitep:7999/hac/pingpongpulse.git"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "bumped": "^0.10.10"
+  }
 }
