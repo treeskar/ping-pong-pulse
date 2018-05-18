@@ -1,7 +1,7 @@
 echo "Building API"
 cd api
 rm -rf dist/*
-npm run build-ts
+npm run build
 cd ../
 echo "Building UI"
 cd ui

@@ -1,4 +1,4 @@
-import { Model, Document, Schema } from 'mongoose';
+import { Document, Model, Schema } from 'mongoose';
 import { logger } from './logger';
 
 const ACTIVE_MINUTE_THRESH0LD = 0.001;
@@ -27,21 +27,21 @@ interface IPingModel extends Model<IPing> {
 }
 
 const PingSchema = new Schema({
-  expireAt: {
-    type: Date,
-    index: { expires: '1s' },
-  },
-  resolution: String,
   date: {
-    type: Date,
     default: () => {
       const date = new Date();
       date.setMilliseconds(0);
       date.setSeconds(0);
       // time.setMinutes(0);
       return date;
-    }
+    },
+    type: Date,
   },
+  expireAt: {
+    index: { expires: '1s' },
+    type: Date,
+  },
+  resolution: String,
   summary: Boolean,
   value: {
     type: Schema.Types.Mixed,
@@ -53,10 +53,12 @@ async function findOneOrCreate(condition: any, expireAt: number = 0) {
   try {
     result = await this.findOne(condition);
   } catch (err) {
-    console.log('create new time segment');
+    logger.info('create new time segment');
   }
   if (!result) {
-    if (expireAt) condition = { ...condition, expireAt };
+    if (expireAt) {
+      condition = { ...condition, expireAt };
+    }
     result = await this.create(condition);
   }
   return result;
@@ -66,7 +68,6 @@ async function getPulseStats(range: number) {
   const to = new Date();
   const from = new Date(to.getTime() - range * 60 * 60 * 1000);
   const result = await this.find({ date: { $gte: from, $lt: to }});
-  console.log(result);
 
   return result
     .map((doc: any) => {
@@ -75,10 +76,10 @@ async function getPulseStats(range: number) {
       return Object.keys(doc.value)
         .map(key => ({
           data: doc.value[key],
-          date: parseInt(key) * resolution + time,
+          date: parseInt(key, 10) * resolution + time,
         }));
     })
-    .reduce((data: Array<ITick>, item: Array<ITick>) => [...data, ...item], [])
+    .reduce((data: ITick[], item: ITick[]) => [...data, ...item], [])
     .sort((a: ITick, b: ITick) => a.date - b.date);
 }
 

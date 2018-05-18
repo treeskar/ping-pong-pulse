@@ -5,7 +5,7 @@ DOCKER_PASS="Pin9P0ngPu|se"
 echo "Building API v${VERSION}"
 cd api
 rm -rf dist/*
-npm run build-ts
+npm run build
 cd ../
 echo "Building UI v${VERSION}"
 cd ui

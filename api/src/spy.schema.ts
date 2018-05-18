@@ -1,6 +1,7 @@
-import { Model, Document, Schema } from 'mongoose';
 import * as  crypto from 'crypto-js';
+import { Document, Model, Schema } from 'mongoose';
 import config from './config';
+import { logger } from './logger';
 
 interface ISpy extends Document {
   name: string;
@@ -10,7 +11,7 @@ interface ISpy extends Document {
 interface ISpyModel extends Model<ISpy> {
   register(name: string, password: string): Promise<ISpy>;
   get(name: string): Promise<ISpy>;
-  validate(name: string, password: string): Promise<Boolean>;
+  validate(name: string, password: string): Promise<boolean>;
 }
 
 const SpySchema = new Schema({
@@ -19,18 +20,20 @@ const SpySchema = new Schema({
 });
 
 async function registerSpy(name: string, password: string) {
-  return await this.create({ name, password: crypto.SHA1(password + config.salt) });
+  return this.create({ name, password: crypto.SHA1(password + config.salt) });
 }
 
 async function getSpy(name: string) {
-  return await this.findOne({ name });
+  return this.findOne({ name });
 }
 
 async function validateSpy(name: string, password: string) {
   const spy = await this.get(name);
-  if (!spy) return false;
-  console.log(crypto.SHA1(password + config.salt).toString());
-  console.log(spy.password);
+  if (!spy) {
+    return false;
+  }
+  logger.info(crypto.SHA1(password + config.salt).toString());
+  logger.info(spy.password);
   return spy.password === crypto.SHA1(password + config.salt).toString();
 }
 

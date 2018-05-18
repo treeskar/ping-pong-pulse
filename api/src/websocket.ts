@@ -1,8 +1,8 @@
-import WebSocket = require('ws');
 import { Server } from 'http';
+import WebSocket = require('ws');
+import { IPingGlobal } from './global';
 import { logger } from './logger';
-import { PingGlobal } from './global';
-declare const global: PingGlobal;
+declare const global: IPingGlobal;
 
 function createWSPulseMessage(pulse: boolean): string {
   return `{"payload": "${pulse ? 'playing': 'idle' }"}`;

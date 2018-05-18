@@ -1,6 +1,6 @@
 import mongoose = require('mongoose');
-import { PingGlobal } from './global';
-declare const global: PingGlobal;
+import { IPingGlobal } from './global';
+declare const global: IPingGlobal;
 
 async function prepareDb() {
   await mongoose.connection.dropDatabase();

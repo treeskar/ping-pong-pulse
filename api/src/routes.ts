@@ -1,15 +1,15 @@
 import { Request, Response, Router } from 'express';
 import * as jwt from 'jsonwebtoken';
-import { broadcastPulse } from './websocket';
-import { PingGlobal } from './global';
 import config from './config';
+import { IPingGlobal } from './global';
 import { logger } from './logger';
+import { broadcastPulse } from './websocket';
 
-declare const global: PingGlobal;
+declare const global: IPingGlobal;
 
 declare global {
   namespace Express {
-    interface Request {
+    interface Request { // tslint:disable-line interface-name
       decoded?: any
     }
   }
@@ -29,26 +29,26 @@ async function authenticateController(req: Request, res: Response) {
   res.setHeader('authorization', token);
 
   res.json({
-    success: true,
     message: 'Enjoy your token!',
-    token: token
+    success: true,
+    token
   });
 }
 
-function authenticateMiddleware(req: Request, res: Response, next: Function) {
-  const token = req.body.token || req.query.token || req.headers['authorization'];
+function authenticateMiddleware(req: Request, res: Response, next: () => void) {
+  const token = req.body.token || req.query.token || req.headers.authorization;
   if (!token) {
     return res.status(403).send({
-      success: false,
-      message: 'No token provided.'
+      message: 'No token provided.',
+      success: false
     });
   }
 
   jwt.verify(token, config.jwtSecret, (error: jwt.JsonWebTokenError, decoded: any) => {
    if (error) {
      return res.json({
-       success: false,
-       message: 'Failed to authenticate token.'
+       message: 'Failed to authenticate token.',
+       success: false
      });
    }
    req.decoded = decoded;

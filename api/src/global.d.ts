@@ -1,13 +1,13 @@
 import Global = NodeJS.Global;
-import WebSocket = require('ws');
 import { Server } from 'http';
+import WebSocket = require('ws');
 
 import { IPingModel } from './ping.schema';
 import { ISpyModel } from './spy.schema';
 
-export interface PingGlobal extends Global {
-  wss: WebSocket.Server;
-  server: Server;
+export interface IPingGlobal extends Global {
   PingModel: IPingModel;
+  server: Server;
   SpyModel: ISpyModel;
+  wss: WebSocket.Server;
 }

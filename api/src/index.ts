@@ -1,16 +1,18 @@
-import express = require('express');
 import bodyParser = require('body-parser');
+import express = require('express');
 import http = require('http');
 import mongoose = require('mongoose');
-import { prepareDb } from './prepareDB'
-import { PingSchema, IPingModel, IPing } from './ping.schema';
-import { SpySchema, ISpyModel, ISpy } from './spy.schema';
-import { logger } from './logger';
-import { startWebSocketServer } from './websocket';
-import { apiRoutes } from './routes';
-import { PingGlobal } from './global';
+
 import config from './config';
-declare const global: PingGlobal;
+import { IPingGlobal } from './global';
+import { logger } from './logger';
+import { IPing, IPingModel, PingSchema } from './ping.schema';
+import { prepareDb } from './prepareDB'
+import { apiRoutes } from './routes';
+import { ISpy, ISpyModel, SpySchema } from './spy.schema';
+import { startWebSocketServer } from './websocket';
+
+declare const global: IPingGlobal;
 
 async function run() {
   mongoose.connect(`${config.mongo.url}/${config.mongo.dataBaseName}`);
@@ -25,7 +27,7 @@ async function run() {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   // Allow CORS
-  app.use(function(req, res, next) {
+  app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
@@ -36,10 +38,10 @@ async function run() {
   global.server = server;
   startWebSocketServer(server);
 
-    //start our server
+  // start our server
   server.listen(process.env.PORT || 8999, () => {
     logger.info(`Server started on port ${server.address().port} :)`);
   });
 }
 
-run().catch(error => console.error(error.stack));
+run().catch(error => logger.error(error.stack));
