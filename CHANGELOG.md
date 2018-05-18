@@ -1,3 +1,10 @@
+<a name="0.1.3"></a>
+## <small>0.1.3 (2018-05-18)</small>
+
+* [+] API: add build automation and tslint fixes cross api project ([80034c0](http://crgitep:7999/hac/pingpongpulse/commits/80034c0))
+
+
+
 <a name="0.1.2"></a>
 ## <small>0.1.2 (2018-05-17)</small>
 
