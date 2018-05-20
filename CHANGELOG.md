@@ -1,3 +1,10 @@
+<a name="0.1.6"></a>
+## <small>0.1.6 (2018-05-20)</small>
+
+* [*] Deploy: encrypt docker hub account password ([bff68cf](http://crgitep:7999/hac/pingpongpulse/commits/bff68cf))
+
+
+
 <a name="0.1.5"></a>
 ## <small>0.1.5 (2018-05-20)</small>
 
