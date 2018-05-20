@@ -4,3 +4,4 @@
 docker/db
 dist
 node_modules
+vault-password

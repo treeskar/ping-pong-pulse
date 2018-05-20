@@ -3,6 +3,7 @@
     email: "{{ docker_hub_email }}"
     username: "{{ docker_hub_username }}"
     password: "{{ docker_hub_password }}"
+  tags: docker_hub_login
 
 - name: Start containers
   docker_service:
