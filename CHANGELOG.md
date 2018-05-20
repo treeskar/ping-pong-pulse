@@ -1,3 +1,19 @@
+<a name="0.1.5"></a>
+## <small>0.1.5 (2018-05-20)</small>
+
+* [*] Deploy: improve provisioning automation ([903215d](http://crgitep:7999/hac/pingpongpulse/commits/903215d))
+* [+] UI: display actual project version in UI ([80f3e23](http://crgitep:7999/hac/pingpongpulse/commits/80f3e23))
+
+
+
+<a name="0.1.4"></a>
+## <small>0.1.4 (2018-05-20)</small>
+
+* [*] Deploy: improve provisioning automation ([903215d](http://crgitep:7999/hac/pingpongpulse/commits/903215d))
+* [+] UI: display actual project version in UI ([80f3e23](http://crgitep:7999/hac/pingpongpulse/commits/80f3e23))
+
+
+
 <a name="0.1.3"></a>
 ## <small>0.1.3 (2018-05-18)</small>
 
