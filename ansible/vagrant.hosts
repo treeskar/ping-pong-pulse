@@ -1,0 +1,2 @@
+[app]
+vagrant ansible_user=vagrant

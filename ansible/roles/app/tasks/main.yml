@@ -1,14 +1,10 @@
 - name: Login to docker hub
-  tags: ['app']
-  become: true
   docker_login:
-    email: "afaitelson@paloaltonetworks.com"
-    username: "pingpongpulse"
-    password: "Pin9P0ngPu|se"
+    email: "{{ docker_hub_email }}"
+    username: "{{ docker_hub_username }}"
+    password: "{{ docker_hub_password }}"
 
-- name: start containers
-  tags: ['app']
-  become: true
+- name: Start containers
   docker_service:
     project_name: pingpongpulse
     definition:

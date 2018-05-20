@@ -1,4 +1,6 @@
 ---
 - hosts: app
+  become: true
   roles:
-    - app
+    - { role: "docker", tags: "docker" }
+    - { role: "app", tags: "app" }

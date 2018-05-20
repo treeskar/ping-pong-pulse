@@ -1,0 +1,10 @@
+---
+- name: Install Python/PIP Packages
+  apt: pkg={{item}} state=present
+  with_items:
+    - python
+    - python-dev
+    - python-pip
+    - python-virtualenv
+- name: Install Docker Compose
+  pip: name=docker-compose
