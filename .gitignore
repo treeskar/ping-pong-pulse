@@ -1,6 +1,7 @@
 .idea
 .idea/vcs.xml
 .DS_Store
+.vagrant
 docker/db
 dist
 node_modules
