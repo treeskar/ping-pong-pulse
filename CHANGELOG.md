@@ -1,3 +1,10 @@
+<a name="0.1.7"></a>
+## <small>0.1.7 (2018-05-21)</small>
+
+* [*] API: fix summarase pulse data ([4c3f8ed](http://crgitep:7999/hac/pingpongpulse/commits/4c3f8ed))
+
+
+
 <a name="0.1.6"></a>
 ## <small>0.1.6 (2018-05-20)</small>
 
