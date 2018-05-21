@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class PingStatusPipe implements PipeTransform {
 
   translation = {
-    idle: 'Ping Pong are waiting you',
+    idle: 'Ping Pong is waiting you',
     playing: 'Game in progress…',
     loading: 'Connecting...',
   };
