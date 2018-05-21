@@ -5,7 +5,8 @@ import mongoose = require('mongoose');
 
 import config from './config';
 import { IPingGlobal } from './global';
-import { logger } from './logger';
+import { httpLogger, logger } from './logger';
+import './logHeader';
 import { IPing, IPingModel, PingSchema } from './ping.schema';
 import { prepareDb } from './prepareDB'
 import { apiRoutes } from './routes';
@@ -26,6 +27,7 @@ async function run() {
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(httpLogger);
   // Allow CORS
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');

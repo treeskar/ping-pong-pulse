@@ -33,7 +33,6 @@ async function validateSpy(name: string, password: string) {
     return false;
   }
   logger.info(crypto.SHA1(password + config.salt).toString());
-  logger.info(spy.password);
   return spy.password === crypto.SHA1(password + config.salt).toString();
 }
 

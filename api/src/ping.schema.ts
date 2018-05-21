@@ -99,8 +99,6 @@ async function savePulseHourly(pulse: boolean) {
 
 function isMinuteHasPulse(doc: Document) {
   const stats = doc.get('value') || {};
-  logger.info(stats);
-  logger.info('--->');
   const activeStat = Object.keys(stats)
     .map(second => stats[second])
     .reduce((acc, secondState) => {
