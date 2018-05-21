@@ -5,11 +5,26 @@
     password: "{{ docker_hub_password }}"
   tags: docker_hub_login
 
+- name: Remove containers
+  docker_container:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - pingpongpulse_api_1
+    - pingpongpulse_nginx_1
+
+- name: Remove images
+  docker_image:
+    state: absent
+    name: "{{ item }}"
+  with_items:
+    - pingpongpulse/api
+    - pingpongpulse/nginx
+
 - name: Start containers
   docker_service:
     project_name: pingpongpulse
     build: yes
-    restarted: yes
     recreate: always
     definition:
       version: "2.3"
