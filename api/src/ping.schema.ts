@@ -100,13 +100,19 @@ async function savePulseHourly(pulse: boolean) {
 function isMinuteHasPulse(doc: Document) {
   const stats = doc.get('value') || {};
   logger.info(stats);
-  const activeSeconds = Object.keys(stats)
+  logger.info('--->');
+  const activeStat = Object.keys(stats)
     .map(second => stats[second])
-    .filter(secondState => secondState)
-    .length;
-  logger.info('activeSeconds');
-  logger.info(activeSeconds);
-  return activeSeconds/60 > ACTIVE_MINUTE_THRESH0LD;
+    .reduce((acc, secondState) => {
+      if (secondState) {
+        acc.playing += 1;
+      } else {
+        acc.idle += 1;
+      }
+      return acc;
+    }, { playing: 0, idle: 0 });
+  logger.info(activeStat);
+  return activeStat.playing > activeStat.idle;
 }
 
 async function savePulse(pulse: boolean) {
@@ -119,8 +125,10 @@ async function savePulse(pulse: boolean) {
   const doc = await this.findOneOrCreate({ date, resolution: 'seconds' }, expirationDate);
   doc.set(`value.${second}`, pulse);
   const summary = doc.get('summary');
-  if (!summary && this.isMinuteHasPulse(doc)) {
-    this.savePulseHourly(true);
+  const minuteSummary = isMinuteHasPulse(doc);
+  if (summary !== minuteSummary) {
+    logger.info(`Save hourly data ${minuteSummary}`);
+    this.savePulseHourly(minuteSummary);
     doc.set('summary', summary);
   }
   return doc.save();

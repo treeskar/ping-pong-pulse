@@ -1,2 +1,2 @@
 [app]
-ppp2 ansible_ssh_host=10.196.0.48 ansible_user=ewexler
+ewexler ansible_ssh_host=10.196.0.48 ansible_user=ewexler

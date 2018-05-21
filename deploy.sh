@@ -29,4 +29,4 @@ docker push pingpongpulse/nginx:latest
 echo "Deploying v${VERSION}"
 cd ../ansible
 ansible-galaxy install -r requirements.yml
-ansible-playbook -v -i prod.hosts playbook.yml --valut-password-file vault-password
+ansible-playbook -v -i prod.hosts playbook.yml --vault-password-file vault-password

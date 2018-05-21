@@ -8,6 +8,9 @@
 - name: Start containers
   docker_service:
     project_name: pingpongpulse
+    build: yes
+    restarted: yes
+    recreate: always
     definition:
       version: "2.3"
       services:
