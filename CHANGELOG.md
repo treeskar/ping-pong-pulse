@@ -1,3 +1,10 @@
+<a name="0.1.10"></a>
+## <small>0.1.10 (2018-05-21)</small>
+
+* [*] Deploy: ￼ fix prod API docker image ([d1ade19](http://crgitep:7999/hac/pingpongpulse/commits/d1ade19))
+
+
+
 <a name="0.1.9"></a>
 ## <small>0.1.9 (2018-05-21)</small>
 
