@@ -1,3 +1,17 @@
+<a name="0.1.8"></a>
+## <small>0.1.8 (2018-05-21)</small>
+
+* [*] API: :bug: fix nodemon file watching configuration ([f787571](http://crgitep:7999/hac/pingpongpulse/commits/f787571))
+* [*] API: allow overwrite MONGO_URL by ENV variables ([f415c39](http://crgitep:7999/hac/pingpongpulse/commits/f415c39))
+* [*] API: improve API logs format, add HTTP logs ([a22e3f3](http://crgitep:7999/hac/pingpongpulse/commits/a22e3f3))
+* [*] Deploy: cleanup docker containers and images in host machine before composing new ([eb66572](http://crgitep:7999/hac/pingpongpulse/commits/eb66572))
+* [*] Deploy: ignore vagrant files ([bfd4b39](http://crgitep:7999/hac/pingpongpulse/commits/bfd4b39))
+* [*] Deploy: remove playbook.retry file from repo ([f77d931](http://crgitep:7999/hac/pingpongpulse/commits/f77d931))
+* [*] Deploy: use decrypted docker hub password from ansible-vault ([e1e39be](http://crgitep:7999/hac/pingpongpulse/commits/e1e39be))
+* [*] UI: spell fix of ping pong status ([14a763e](http://crgitep:7999/hac/pingpongpulse/commits/14a763e))
+
+
+
 <a name="0.1.7"></a>
 ## <small>0.1.7 (2018-05-21)</small>
 
