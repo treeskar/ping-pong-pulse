@@ -1,6 +1,9 @@
 VERSION=$(jq -r ".version" package.json)
-DOCKER_USER="pingpongpulse"
-DOCKER_PASS="Pin9P0ngPu|se"
+DOCKER_USER=$(yq r ansible/roles/app/defaults/main.yml 'docker_hub_username')
+KYE_FILE_PATH=ansible/group_vars/all.yml
+ansible-vault decrypt ${KYE_FILE_PATH} --vault-password-file ansible/vault-password
+DOCKER_PASS=$(yq r ${KYE_FILE_PATH} 'docker_hub_password')
+ansible-vault encrypt ${KYE_FILE_PATH} --vault-password-file ansible/vault-password
 
 echo "Building API v${VERSION}"
 cd api
