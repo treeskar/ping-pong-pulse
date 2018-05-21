@@ -24,7 +24,7 @@ gulp.task('compile', ['lint'], function() {
 gulp.task('watch', ['compile'], function() {
   return nodemon({
     script: 'dist/index.js',
-    watch: 'src',
+    ext: 'ts',
     tasks: ['compile']
   });
 });
