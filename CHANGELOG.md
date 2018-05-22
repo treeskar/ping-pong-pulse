@@ -1,3 +1,10 @@
+<a name="0.1.12"></a>
+## <small>0.1.12 (2018-05-22)</small>
+
+* [*] Deploy: add order to docker compose flow ([032eb42](http://crgitep:7999/hac/pingpongpulse/commits/032eb42))
+
+
+
 <a name="0.1.11"></a>
 ## <small>0.1.11 (2018-05-22)</small>
 
