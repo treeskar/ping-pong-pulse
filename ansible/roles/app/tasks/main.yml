@@ -27,7 +27,7 @@
     build: yes
     recreate: always
     definition:
-      version: "2.3"
+      version: "3.4"
       services:
         mongo:
           image: mongo
@@ -38,8 +38,12 @@
           image: pingpongpulse/api
           ports:
             - "8999:8999"
+          depends_on:
+            - mongo
         nginx:
           image: pingpongpulse/nginx
           ports:
             - "80:80"
             - "443:443"
+          depends_on:
+            - api
