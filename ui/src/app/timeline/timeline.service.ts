@@ -1,23 +1,16 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TimeLineService {
 
-  data$: Observable<any>;
+  public data$: Observable<any>;
 
   constructor(private http: HttpClient) {
     this.data$ = this.http
-      .get(`/api/stats?range=24`)
-      .pipe(
-        map((response) => {
-          console.log(response);
-          return response;
-        })
-      );
+      .get(`/api/stats?range=24`);
   }
 }
