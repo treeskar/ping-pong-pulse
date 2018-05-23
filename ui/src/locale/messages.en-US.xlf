@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="statusLabel" datatype="html">
+        <source>Current status</source>
+        <target>The current status is:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/status/status.component.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">The current status label</note>
+      </trans-unit>
+      <trans-unit id="appDescription" datatype="html">
+        <source>Application Description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/header/header.component.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group><target>This page provides status information on Ping Pong table occupation</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

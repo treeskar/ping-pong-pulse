@@ -18,7 +18,7 @@ interface ITick {
 
 @Component({
   selector: 'app-timeline',
-  templateUrl: './timeline.component.html',
+  template: '',
   styleUrls: ['./timeline.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })

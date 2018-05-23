@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from 'rxjs/Observable'
-import { startWith, pluck } from 'rxjs/operators'
+import { Observable } from 'rxjs/Observable';
+import { startWith, pluck } from 'rxjs/operators';
 
 import { StatusService } from './status.service';
 

@@ -1,8 +1,8 @@
 <ng-container *ngIf="isNow; then currentStatus else previousStatus"></ng-container>
 
 <ng-template #currentStatus>
-  <p class="status-label">The current status is:</p>
-  <span class="game-status">{{ status | pingStatus }}</span>
+  <p class="status-label" i18n="The current status label@@statusLabel">Current status</p>
+  <span class="game-status" >{{ status | pingStatus }}</span>
 </ng-template>
 
 <ng-template #previousStatus>
