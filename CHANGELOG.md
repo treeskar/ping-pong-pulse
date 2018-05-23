@@ -1,3 +1,14 @@
+<a name="0.1.13"></a>
+## <small>0.1.13 (2018-05-23)</small>
+
+* [-] UI: delete unnecessary logs and map ([607daa0](http://crgitep:7999/hac/pingpongpulse/commits/607daa0))
+* [*] UI: :bug: fixed time traveling issue ([3ef26fc](http://crgitep:7999/hac/pingpongpulse/commits/3ef26fc))
+* [*] UI: restyle time line graph, added labels to graph ([aee52a2](http://crgitep:7999/hac/pingpongpulse/commits/aee52a2))
+* [+] UI: :new: added feedback link ([1b3fe78](http://crgitep:7999/hac/pingpongpulse/commits/1b3fe78))
+* [+] UI: Add internationalisation to the app ([d615cd4](http://crgitep:7999/hac/pingpongpulse/commits/d615cd4))
+
+
+
 <a name="0.1.12"></a>
 ## <small>0.1.12 (2018-05-22)</small>
 
