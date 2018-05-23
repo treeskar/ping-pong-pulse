@@ -10,6 +10,7 @@ import { PingPongComponent } from './ping-pong/ping-pong.component';
 import { StatusComponent } from './status/status.component';
 import { PingStatusPipe } from './ping-status.pipe';
 import { environment } from '../environments/environment';
+import { TimelineLabelComponent } from './timeline-label/timeline-label.component';
 
 const providers = [];
 if (!environment.production) {
@@ -25,6 +26,7 @@ if (!environment.production) {
     PingPongComponent,
     StatusComponent,
     PingStatusPipe,
+    TimelineLabelComponent,
   ],
   imports: [
     BrowserModule,

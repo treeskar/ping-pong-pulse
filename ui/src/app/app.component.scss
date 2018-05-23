@@ -4,6 +4,12 @@
   @include flex-container();
 }
 
+app-timeline-label {
+  position: absolute;
+  top: 0;
+  left: 100px;
+}
+
 .page {
   @include flex-container(row);
   justify-content: center;

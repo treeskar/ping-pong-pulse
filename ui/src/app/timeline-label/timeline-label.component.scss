@@ -1,0 +1,37 @@
+@import "../../sass/mixin";
+@import "../../sass/varaibles";
+
+:host {
+  font-family: $defaultFontFamily;
+  color: #666;
+  font-size: 12px;
+}
+
+.label-title {
+  font-weight: 400;
+  margin: 5px 0;
+}
+
+.playing-label,
+.idle-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  font-weight: 200;
+
+  &:before {
+    content: '';
+    display: inline-block;
+    height: 10px;
+    width: 15px;
+    margin-right: 5px;
+  }
+}
+
+.playing-label:before {
+  background-color: $playing-color;
+}
+
+.idle-label:before {
+  background-color: $idle-color;
+}

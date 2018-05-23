@@ -48,19 +48,19 @@ export class TimeLineComponent implements OnInit, OnDestroy {
   get minuteScaleDomain() {
     const currentDate = moment();
     const beforeMinute = moment().subtract(1, 'minute');
-    return [beforeMinute.toDate(), currentDate.toDate()]
+    return [beforeMinute.toDate(), currentDate.toDate()];
   }
 
   get hourScaleDomain() {
     const beforeMinute = moment().subtract(1, 'minute');
     const beforeHour = moment().subtract(1, 'hour');
-    return [beforeHour.toDate(), beforeMinute.toDate()]
+    return [beforeHour.toDate(), beforeMinute.toDate()];
   }
 
   get dayScaleDomain() {
     const beforeHour = moment().subtract(1, 'hour');
     const beforeDay = moment().subtract(1, 'day');
-    return [beforeDay.toDate(), beforeHour.toDate()]
+    return [beforeDay.toDate(), beforeHour.toDate()];
   }
 
   onOver(position, marker) {
@@ -122,7 +122,7 @@ export class TimeLineComponent implements OnInit, OnDestroy {
       .style('transform', `translateY(${this.margin.top}px)`);
 
     marker.append('span')
-      .attr('class','label')
+      .attr('class', 'label')
       .text(this.activeTick.date);
 
     const convertEventToPosition = map((event: MouseEvent) => event.clientY);
@@ -229,7 +229,7 @@ export class TimeLineComponent implements OnInit, OnDestroy {
           }, [])
         )),
         tap(data => this.dataCache = data),
-      )
+      );
   }
 
   getDateByPosition(y) {
@@ -239,7 +239,7 @@ export class TimeLineComponent implements OnInit, OnDestroy {
         return max >= y && min <= y;
       });
     if (!scale) {
-      return null
+      return null;
     }
     return scale.invert(y);
   }

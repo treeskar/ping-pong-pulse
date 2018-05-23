@@ -1,25 +1,28 @@
+@import "../../sass/varaibles";
+
 app-timeline {
   position: absolute;
   z-index: 1;
   top: 0;
   bottom: 0;
   left: 0;
-  width: 80px;
+  width: 85px;
   overflow: hidden;
+  background: rgba(0,0,0,.05);
 
   svg {
     cursor: pointer;
   }
 
   .bar {
-    stroke-width: 10px;
+    stroke-width: 25px;
 
     &.idle {
-      stroke: #eee;
+      stroke: $idle-color;
     }
 
     &.playing {
-      stroke: #333;
+      stroke: $playing-color;
     }
   }
 
