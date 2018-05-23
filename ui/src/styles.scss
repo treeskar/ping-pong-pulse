@@ -2,6 +2,7 @@
 @import "~normalize-scss/sass/_normalize";
 @import url('https://fonts.googleapis.com/css?family=Bungee+Inline');
 @import "sass/mixin";
+@import "sass/varaibles";
 
 html, body {
   margin: 0;
@@ -18,4 +19,14 @@ body {
   margin: 0 auto;
   max-width: 980px;
   width: 100%;
+}
+
+a {
+  color: $text-color;
+  transition: .3s linear color;
+
+  &:hover,
+  &:active {
+    color: $active-color;
+  }
 }

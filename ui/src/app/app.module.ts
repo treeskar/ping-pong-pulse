@@ -11,6 +11,7 @@ import { StatusComponent } from './status/status.component';
 import { PingStatusPipe } from './ping-status.pipe';
 import { environment } from '../environments/environment';
 import { TimelineLabelComponent } from './timeline-label/timeline-label.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 const providers = [];
 if (!environment.production) {
@@ -27,6 +28,7 @@ if (!environment.production) {
     StatusComponent,
     PingStatusPipe,
     TimelineLabelComponent,
+    FeedbackComponent,
   ],
   imports: [
     BrowserModule,

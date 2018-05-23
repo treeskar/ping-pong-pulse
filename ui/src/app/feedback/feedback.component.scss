@@ -1,0 +1,10 @@
+@import "../../sass/varaibles";
+
+a {
+  color: inherit;
+
+  &:hover,
+  &:active {
+    color: $active-color;
+  }
+}
