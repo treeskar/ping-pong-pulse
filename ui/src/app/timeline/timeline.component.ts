@@ -4,7 +4,7 @@ import { merge } from 'rxjs/observable/merge';
 import { interval } from 'rxjs/observable/interval';
 import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { scan, map, tap, debounceTime, filter, startWith } from 'rxjs/operators'
+import { scan, map, tap, debounceTime, filter, startWith } from 'rxjs/operators';
 import * as moment from 'moment';
 import * as d3 from 'd3';
 import 'd3-selection-multi';
@@ -91,7 +91,8 @@ export class TimeLineComponent implements OnInit, OnDestroy {
 
     const date = this.getDateByPosition(top - this.margin.top);
     const index = this.bisector(this.dataCache, date);
-    const value = this.dataCache[index - 1] ? 'playing' : 'idle';
+    const tick = this.dataCache[index - 1];
+    const value = tick && tick.data ? 'playing' : 'idle';
     return this.statusService.setStatus(moment(date).format('DD/MM/YYYY HH:mm:SS'), value);
   }
 
@@ -216,7 +217,9 @@ export class TimeLineComponent implements OnInit, OnDestroy {
           gameStatus$.pipe(startWith(data))
         )),
         scan((acc, data) => {
-          if (Array.isArray(data)) return data;
+          if (Array.isArray(data)) {
+            return data;
+          }
           acc.push(data);
           return acc;
         }, []),
@@ -234,8 +237,8 @@ export class TimeLineComponent implements OnInit, OnDestroy {
 
   getDateByPosition(y) {
     const scale = [this.minuteScale, this.hourScale, this.dayScale]
-      .find((scale) => {
-        const [max, min] = scale.range();
+      .find((scaleItem) => {
+        const [max, min] = scaleItem.range();
         return max >= y && min <= y;
       });
     if (!scale) {
@@ -303,16 +306,16 @@ export class TimeLineComponent implements OnInit, OnDestroy {
     update
       .exit()
       // .interrupt()
-      //.transition(this.transition)
+      // .transition(this.transition)
       .attrs({
         y1: (tick, index, bars) => bars[index].getAttribute('y2'),
       })
       .remove();
 
     update
-      //.interrupt()
-      //.transition(this.transition)
-      //.delay(500)
+      // .interrupt()
+      // .transition(this.transition)
+      // .delay(500)
       .attrs({
         y1: (tick, index) => this.findTickStart(tick, index, data),
         y2: (tick, index) => this.findTickEnd(tick, index, data),
