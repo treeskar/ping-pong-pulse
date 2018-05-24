@@ -1,3 +1,12 @@
+<a name="0.1.14"></a>
+## <small>0.1.14 (2018-05-24)</small>
+
+* [*] Deploy: update app version in package-lock.json also ([9119738](http://crgitep:7999/hac/pingpongpulse/commits/9119738))
+* [+] UI/API: :new: reload ui when new version released ([7c19ee5](http://crgitep:7999/hac/pingpongpulse/commits/7c19ee5))
+* [+*] API: :repeat: reconnect to DB if connection broke ([1479d8d](http://crgitep:7999/hac/pingpongpulse/commits/1479d8d))
+
+
+
 <a name="0.1.13"></a>
 ## <small>0.1.13 (2018-05-23)</small>
 
