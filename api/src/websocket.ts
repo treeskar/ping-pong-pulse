@@ -1,26 +1,42 @@
 import { Server } from 'http';
 import WebSocket = require('ws');
-import { IPingGlobal } from './global';
+import { PingModel } from './db';
 import { logger } from './logger';
-declare const global: IPingGlobal;
 
-function createWSPulseMessage(pulse: boolean): string {
-  return `{"payload": "${pulse ? 'playing': 'idle' }"}`;
+const { version } = require('../package.json'); // tslint:disable-line no-var-requires
+let wss: WebSocket.Server;
+
+enum WS_COMMAND {
+  GAME_STATUS = 'GAME_STATUS',
+  VERSION = 'VERSION',
 }
 
-async function connectionHandler(ws: WebSocket) {
-  logger.info('connection');
-  const lastStatus = await global.PingModel.getLastPulse();
+function createWSMessage(cmd: WS_COMMAND, value: any) {
+  return JSON.stringify({
+    payload: { cmd, value },
+  });
+}
+
+function createWSPulseMessage(pulse: boolean): string {
+  return createWSMessage(WS_COMMAND.GAME_STATUS, pulse ? 'yes': 'no');
+}
+
+async function connectionHandler(ws: WebSocket, req: any) {
+  const ip = req.connection.remoteAddress;
+  logger.info(`WS client '${ip}' connected`);
   if (ws.readyState === WebSocket.OPEN) {
+    ws.send(createWSMessage(WS_COMMAND.VERSION, version));
+
+    const lastStatus = await PingModel.getLastPulse();
     ws.send(createWSPulseMessage(lastStatus));
   }
 }
 
 function broadcastPulse(pulse: boolean) {
-  if (!global.wss) {
+  if (!wss) {
     return;
   }
-  global.wss.clients.forEach((client: any) => {
+  wss.clients.forEach((client: any) => {
     if (client.readyState === WebSocket.OPEN) {
       client.send(createWSPulseMessage(pulse));
     }
@@ -28,9 +44,13 @@ function broadcastPulse(pulse: boolean) {
 }
 
 function startWebSocketServer(server: Server) {
-  const wss = new WebSocket.Server({ server });
-  global.wss = wss;
+  wss = new WebSocket.Server({ server });
   wss.on('connection', connectionHandler);
+
+  wss.on('close', function close() {
+    logger.info('WS client disconnected');
+  });
+
 }
 
 export { startWebSocketServer, createWSPulseMessage, broadcastPulse }

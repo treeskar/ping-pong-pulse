@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { StatusService } from '../status.service';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { WSService } from '../ws.service';
 
 @Component({
   selector: 'app-status',
@@ -16,13 +16,13 @@ export class StatusComponent {
   @Input() set date(value) {
     this.isNow = !value || value === 'Now';
     this.cacheDate = value;
-  };
+  }
 
   get date() {
     return this.cacheDate;
   }
 
-  constructor(private statusService: StatusService) {}
+  constructor(private statusService: WSService) {}
 
   goBack() {
     this.statusService.setStatus('Now');

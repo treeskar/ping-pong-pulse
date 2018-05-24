@@ -8,7 +8,7 @@ import { scan, map, tap, debounceTime, filter, startWith } from 'rxjs/operators'
 import * as moment from 'moment';
 import * as d3 from 'd3';
 import 'd3-selection-multi';
-import { StatusService } from '../status.service';
+import { WSService } from '../ws.service';
 import { switchMap } from 'rxjs/internal/operators';
 
 interface ITick {
@@ -43,7 +43,7 @@ export class TimeLineComponent implements OnInit, OnDestroy {
     bottom: 10,
   };
 
-  constructor(public timeLineService: TimeLineService, public statusService: StatusService, private element: ElementRef) { }
+  constructor(public timeLineService: TimeLineService, public statusService: WSService, private element: ElementRef) { }
 
   get minuteScaleDomain() {
     const currentDate = moment();

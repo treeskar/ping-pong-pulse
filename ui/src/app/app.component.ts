@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { startWith, pluck } from 'rxjs/operators';
 
-import { StatusService } from './status.service';
+import { WSService } from './ws.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent {
   status$: Observable<string>;
   date$: Observable<string>;
 
-  constructor(public statusService: StatusService) {
+  constructor(public statusService: WSService) {
     this.status$ = statusService.status$
       .pipe(
         pluck('value'),
