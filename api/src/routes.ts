@@ -1,11 +1,9 @@
 import { Request, Response, Router } from 'express';
 import * as jwt from 'jsonwebtoken';
 import config from './config';
-import { IPingGlobal } from './global';
+import { PingModel, SpyModel } from './db';
 import { logger } from './logger';
 import { broadcastPulse } from './websocket';
-
-declare const global: IPingGlobal;
 
 declare global {
   namespace Express {
@@ -16,7 +14,7 @@ declare global {
 }
 
 async function authenticateController(req: Request, res: Response) {
-  const isSpyValid = await global.SpyModel.validate(req.body.name, req.body.password);
+  const isSpyValid = await SpyModel.validate(req.body.name, req.body.password);
   if (!isSpyValid) {
     return res.json({ success: false, message: 'Authentication failed. Wrong password.' });
   }
@@ -57,15 +55,15 @@ function authenticateMiddleware(req: Request, res: Response, next: () => void) {
 }
 
 function savePulseController(req: Request, res: Response) {
-  global.PingModel.savePulse(req.body.pulse);
-  logger.info(`Got pulse state: ${req.body.pulse}`);
+  PingModel.savePulse(req.body.pulse);
+  logger.info(`savePulseController: req body: ${JSON.stringify(req.body)}`);
   broadcastPulse(req.body.pulse);
   res.send('Pong');
 }
 
 async function getStatsController(req: Request, res: Response) {
   const range = Number.parseInt(req.query.range);
-  const pulseStats = await global.PingModel.getPulseStats(range);
+  const pulseStats = await PingModel.getPulseStats(range);
   res.send(pulseStats);
 }
 

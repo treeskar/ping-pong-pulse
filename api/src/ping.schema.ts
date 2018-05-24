@@ -59,7 +59,8 @@ async function findOneOrCreate(condition: any, expireAt: number = 0) {
     if (expireAt) {
       condition = { ...condition, expireAt };
     }
-    result = await this.create(condition);
+    result = await this.create(condition)
+      .catch((error: Error) => logger.error(error));
   }
   return result;
 }
@@ -67,7 +68,8 @@ async function findOneOrCreate(condition: any, expireAt: number = 0) {
 async function getPulseStats(range: number) {
   const to = new Date();
   const from = new Date(to.getTime() - range * 60 * 60 * 1000);
-  const result = await this.find({ date: { $gte: from, $lt: to }});
+  const result = await this.find({ date: { $gte: from, $lt: to }})
+    .catch((error: Error) => logger.error(error));
 
   return result
     .map((doc: any) => {
@@ -84,7 +86,6 @@ async function getPulseStats(range: number) {
 }
 
 async function savePulseHourly(pulse: boolean) {
-  logger.info('savePulseHourly');
   const date = new Date();
   const minute = date.getMinutes();
 
@@ -92,7 +93,8 @@ async function savePulseHourly(pulse: boolean) {
   date.setSeconds(0);
   date.setMinutes(0);
 
-  const doc = await this.findOneOrCreate({ date, resolution: 'minutes' });
+  const doc = await this.findOneOrCreate({ date, resolution: 'minutes' })
+    .catch((error: Error) => logger.error(error));
   doc.set(`value.${minute}`, pulse);
   return doc.save();
 }
@@ -109,7 +111,6 @@ function isMinuteHasPulse(doc: Document) {
       }
       return acc;
     }, { playing: 0, idle: 0 });
-  logger.info(activeStat);
   return activeStat.playing > activeStat.idle;
 }
 
@@ -120,7 +121,8 @@ async function savePulse(pulse: boolean) {
   date.setMilliseconds(0);
   date.setSeconds(0);
   const expirationDate = new Date(date.getTime() + MINUTE_RESOLUTION_EXPIRATION_TIME*1000);
-  const doc = await this.findOneOrCreate({ date, resolution: 'seconds' }, expirationDate);
+  const doc = await this.findOneOrCreate({ date, resolution: 'seconds' }, expirationDate)
+    .catch((error: Error) => logger.error(error));;
   doc.set(`value.${second}`, pulse);
   const summary = doc.get('summary');
   const minuteSummary = isMinuteHasPulse(doc);
@@ -133,7 +135,8 @@ async function savePulse(pulse: boolean) {
 }
 
 async function getLastPulse() {
-  const lastRecords = await this.find().sort({ date: -1 }).limit(1);
+  const lastRecords = await this.find().sort({ date: -1 }).limit(1)
+    .catch((error: Error) => logger.error(error));
   if (!lastRecords.length) {
     return false;
   }

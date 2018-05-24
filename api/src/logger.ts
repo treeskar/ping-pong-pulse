@@ -2,6 +2,20 @@ import morgan = require('morgan');
 const { createLogger, format, transports, addColors } = require('winston'); // tslint:disable-line no-var-requires
 const chalk = require('chalk'); // tslint:disable-line no-var-requires
 const { combine, timestamp, printf } = format;
+const { version } = require('../package.json'); // tslint:disable-line no-var-requires
+
+const APIHeader = `
+██████╗ ██╗███╗   ██╗ ██████╗     ██████╗  ██████╗ ███╗   ██╗ ██████╗ 
+██╔══██╗██║████╗  ██║██╔════╝     ██╔══██╗██╔═══██╗████╗  ██║██╔════╝ 
+██████╔╝██║██╔██╗ ██║██║  ███╗    ██████╔╝██║   ██║██╔██╗ ██║██║  ███╗
+██╔═══╝ ██║██║╚██╗██║██║   ██║    ██╔═══╝ ██║   ██║██║╚██╗██║██║   ██║
+██║     ██║██║ ╚████║╚██████╔╝    ██║     ╚██████╔╝██║ ╚████║╚██████╔╝
+╚═╝     ╚═╝╚═╝  ╚═══╝ ╚═════╝     ╚═╝      ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ${chalk.italic('pulse')}
+version ${version}
+`;
+
+console.log(APIHeader); // tslint:disable-line no-console
+
 
 const logFormatter = printf((info: any) => {
   return `[${chalk.gray(info.timestamp)}] ${info.level}: ${JSON.stringify(info.message, null, 2)}`;
