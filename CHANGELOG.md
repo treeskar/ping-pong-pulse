@@ -1,3 +1,10 @@
+<a name="0.1.15"></a>
+## <small>0.1.15 (2018-05-25)</small>
+
+* [+] Deploy: add HTTPS configuration to nginx dev/prod ([6c751ce](http://crgitep:7999/hac/pingpongpulse/commits/6c751ce))
+
+
+
 <a name="0.1.14"></a>
 ## <small>0.1.14 (2018-05-24)</small>
 
