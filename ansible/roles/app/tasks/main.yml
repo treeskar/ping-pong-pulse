@@ -1,3 +1,14 @@
+- name: Copy certificates
+  copy:
+    src: "ssl/server.{{item}}"
+    dest: "/etc/ssl/server.{{item}}"
+    owner: root
+    group: root
+    mode: 0600
+  with_items:
+    - key
+    - crt
+
 - name: Login to docker hub
   docker_login:
     email: "{{ docker_hub_email }}"
@@ -42,6 +53,8 @@
             - mongo
         nginx:
           image: pingpongpulse/nginx
+          volumes:
+            - /etc/ssl:/etc/ssl
           ports:
             - "80:80"
             - "443:443"

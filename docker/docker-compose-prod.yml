@@ -20,6 +20,8 @@ services:
     build:
       context: ../
       dockerfile: docker/nginx/Dockerfile
+    volumes:
+      - /etc/ssl:/etc/ssl
     ports:
       - 80:80
       - 443:443
