@@ -1,20 +1,28 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TimelineComponent } from './timeline.component';
+import { TimeLineComponent } from './timeline.component';
+import { timeLineServiceMock } from './timeline.service.mock';
+import { TimeLineService } from './timeline.service';
+import { WSServiceMock } from '../ws.service.mock';
+import { WSService } from '../ws.service';
 
-describe('TimelineComponent', () => {
-  let component: TimelineComponent;
-  let fixture: ComponentFixture<TimelineComponent>;
+describe('TimeLineComponent', () => {
+  let component: TimeLineComponent;
+  let fixture: ComponentFixture<TimeLineComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TimelineComponent ]
+      declarations: [ TimeLineComponent ],
+      providers: [
+        { provide: TimeLineService, useValue: timeLineServiceMock },
+        { provide: WSService, useValue: WSServiceMock },
+      ],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TimelineComponent);
+    fixture = TestBed.createComponent(TimeLineComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

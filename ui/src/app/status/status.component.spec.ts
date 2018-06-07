@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StatusComponent } from './status.component';
+import { WSService } from '../ws.service';
+import { WSServiceMock } from '../ws.service.mock';
+import { mockPipeGenerator } from '../mock.pipe';
 
 describe('StatusComponent', () => {
   let component: StatusComponent;
@@ -8,7 +11,11 @@ describe('StatusComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StatusComponent ]
+      declarations: [
+        StatusComponent,
+        mockPipeGenerator('pingStatus'),
+      ],
+      providers: [{ provide: WSService, useValue: WSServiceMock }],
     })
     .compileComponents();
   }));
