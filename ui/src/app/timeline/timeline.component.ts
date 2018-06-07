@@ -1,15 +1,37 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { TimeLineService } from './timeline.service';
 import { merge } from 'rxjs/observable/merge';
 import { interval } from 'rxjs/observable/interval';
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import { animationFrame } from 'rxjs/scheduler/animationFrame';
+import { Subject } from 'rxjs/Subject';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { scan, map, tap, debounceTime, filter, startWith } from 'rxjs/operators';
+import { scan, map, tap, withLatestFrom, mapTo, mergeMap, filter, startWith, distinctUntilChanged } from 'rxjs/operators';
 import * as moment from 'moment';
 import * as d3 from 'd3';
 import 'd3-selection-multi';
 import { WSService } from '../ws.service';
 import { switchMap } from 'rxjs/internal/operators';
+
+moment.updateLocale('en', {
+  relativeTime : {
+    future: 'in %s',
+    past: (value) => (value === 'Now' ? value : `${value} ago`),
+    s  : 'Now',
+    ss : '%d sec',
+    m:  'a min',
+    mm: '%d min',
+    h:  'an h',
+    hh: '%d h',
+    d:  'a day',
+    dd: '%d days',
+    M:  'a month',
+    MM: '%d months',
+    y:  'a year',
+    yy: '%d years'
+  }
+});
 
 interface ITick {
   data: boolean;
@@ -18,7 +40,7 @@ interface ITick {
 
 @Component({
   selector: 'app-timeline',
-  template: '',
+  templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
@@ -26,15 +48,26 @@ export class TimeLineComponent implements OnInit, OnDestroy {
 
   width: number;
   height: number;
-  transition: any = d3.transition().duration(500);
-  minuteScale: any;
-  hourScale: any;
-  dayScale: any;
+  scale: any;
+  currentScale: any;
+  axis: any;
+  gAxis: any;
   svg: any;
-  subscription: Subscription;
-  activeTick: any;
+  gZoom: any;
   dataCache: Array<ITick>;
   bisector = d3.bisector((tick: ITick) => tick.date).left;
+  zoom: any;
+  markerPosition$: Observable<number>;
+  click$: Observable<number>;
+  mouseLeave$: Observable<number>;
+  mouseMove$: Observable<number>;
+  zoomMarkerPosition$: Observable<number>;
+  status$: Observable<number>;
+  markerDate$: Observable<Date>;
+  markerText$: Observable<string>;
+  translate$: Observable<string>;
+  zoom$: Subject<any> = new Subject();
+  subscription: Subscription = new Subscription();
 
   margin = {
     left: 0,
@@ -45,51 +78,13 @@ export class TimeLineComponent implements OnInit, OnDestroy {
 
   constructor(public timeLineService: TimeLineService, public statusService: WSService, private element: ElementRef) { }
 
-  get minuteScaleDomain() {
-    const currentDate = moment();
-    const beforeMinute = moment().subtract(1, 'minute');
-    return [beforeMinute.toDate(), currentDate.toDate()];
+  get scaleDomain() {
+    const to = moment().subtract(24, 'hour');
+    return [to.toDate(), moment().toDate()];
   }
 
-  get hourScaleDomain() {
-    const beforeMinute = moment().subtract(1, 'minute');
-    const beforeHour = moment().subtract(1, 'hour');
-    return [beforeHour.toDate(), beforeMinute.toDate()];
-  }
-
-  get dayScaleDomain() {
-    const beforeHour = moment().subtract(1, 'hour');
-    const beforeDay = moment().subtract(1, 'day');
-    return [beforeDay.toDate(), beforeHour.toDate()];
-  }
-
-  onOver(position, marker) {
-    marker.style('transform', `translateY(${position}px)`);
-  }
-
-  updateMarkerLabel(position, marker) {
-    if (typeof position !== 'number') {
-      marker.select('.label').text(position);
-      return;
-    }
-    const date = this.getDateByPosition(position - this.margin.top);
-    const text = moment(date).fromNow();
-    marker.select('.label')
-      .text(() => ['Invalid date', 'a few seconds ago'].includes(text) ? 'Now' : text);
-  }
-
-  updateActiveTick(top, marker) {
-    this.activeTick = {
-      top,
-      date: marker.select('.label').text(),
-      freeze: true,
-    };
-
-    if (this.activeTick.date === 'Now') {
-      return this.statusService.setStatus(this.activeTick.date);
-    }
-
-    const date = this.getDateByPosition(top - this.margin.top);
+  updateCurrentStatus(y) {
+    const date = this.scale.invert(y - this.margin.top);
     const index = this.bisector(this.dataCache, date);
     const tick = this.dataCache[index - 1];
     const value = tick && tick.data ? 'playing' : 'idle';
@@ -100,15 +95,6 @@ export class TimeLineComponent implements OnInit, OnDestroy {
     this.width = this.element.nativeElement.offsetWidth - this.margin.left - this.margin.right;
     this.height = this.element.nativeElement.offsetHeight - this.margin.top - this.margin.bottom;
     this.dataCache = [];
-    this.minuteScale = d3.scaleTime()
-      .domain(this.minuteScaleDomain)
-      .rangeRound([this.height * 0.15, this.margin.top]);
-    this.hourScale = d3.scaleTime()
-      .domain(this.hourScaleDomain)
-      .rangeRound([this.height * 0.3, this.height * 0.15]);
-    this.dayScale = d3.scaleTime()
-      .domain(this.dayScaleDomain)
-      .rangeRound([this.height, this.height * 0.3]);
 
     this.svg = d3.select(this.element.nativeElement)
       .append('svg')
@@ -117,92 +103,111 @@ export class TimeLineComponent implements OnInit, OnDestroy {
       .append('g')
       .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
 
-    this.activeTick = { top: this.margin.top, date: 'Now', freeze: true };
-    const marker = d3.select(this.element.nativeElement).append('div')
-      .attr('class', 'marker')
-      .style('transform', `translateY(${this.margin.top}px)`);
+    this.zoom = d3.zoom()
+      .scaleExtent([1, 15])
+      .translateExtent([[0, 0], [this.width, this.height]])
+      .duration(300)
+      .on('zoom', () => this.zoom$.next(d3.event.transform));
 
-    marker.append('span')
-      .attr('class', 'label')
-      .text(this.activeTick.date);
+    this.scale = d3.scaleTime()
+      .domain(this.scaleDomain)
+      .range([this.height, 0]);
+    this.currentScale = this.scale;
 
-    const convertEventToPosition = map((event: MouseEvent) => event.clientY);
+    this.axis = d3.axisRight(this.scale)
+      .tickFormat(d3.timeFormat('%H:%M:%S'));
 
-    const svgElement = this.element.nativeElement.querySelector('svg');
-    this.subscription = fromEvent(svgElement, 'mousemove')
-      .pipe(
-        convertEventToPosition,
-        tap(position => {
-          this.activeTick.freeze = false;
-          this.onOver(position, marker);
-        }),
-        debounceTime(50),
-        filter(() => (!this.activeTick.freeze)),
-      )
-      .subscribe((position) => this.updateMarkerLabel(position, marker));
-
-    this.subscription.add(
-      this.statusService.status$
-        .pipe(
-          filter((status) => (status.date === 'Now' && this.activeTick.date !== 'Now')),
-        )
-        .subscribe(() => {
-          this.activeTick = { top: this.margin.top, date: 'Now', freeze: true };
-          this.onOver(this.activeTick.top, marker);
-          this.updateMarkerLabel(this.activeTick.date, marker);
-        }),
-    );
-
-    this.subscription.add(
-      fromEvent(svgElement, 'click')
-        .pipe(convertEventToPosition)
-        .subscribe(position => {
-          this.onOver(position, marker);
-          this.updateActiveTick(position, marker);
-        }),
-    );
-
-    this.subscription.add(
-      fromEvent(this.element.nativeElement, 'mouseleave')
-        .subscribe(() => {
-          this.onOver(this.activeTick.top, marker);
-          this.updateMarkerLabel(this.activeTick.date, marker);
-          this.activeTick.freeze = true;
-        }),
-    );
-
-    this.svg.append('g')
-      .attr('class', 'axis axisRight minuteScale')
+    this.gAxis = this.svg.append('g')
+      .attr('class', 'axis axisRight scale')
       .attr('transform', `translate(${(this.width)}, 0)`)
-      .call(
-        d3.axisRight(this.minuteScale)
-          .ticks(2)
-          .tickFormat(d3.timeFormat('%H:%M:%S')),
-      );
+      .call(this.axis);
 
-    this.svg.append('g')
-      .attr('class', 'axis axisRight hourScale')
-      .attr('transform', `translate(${(this.width)}, 0)`)
-      .call(
-        d3.axisRight(this.hourScale)
-          .ticks(3)
-          .tickFormat(d3.timeFormat('%H:%M')),
-      );
+    this.gZoom = this.svg.append('rect')
+      .attrs({
+        class: 'zoom',
+        width: this.width + this.margin.right,
+        height: this.height,
+      })
+      .call(this.zoom)
+      .transition()
+      .duration(1500);
 
-    this.svg.append('g')
-      .attr('class', 'axis axisRight dayScale')
-      .attr('transform', `translate(${(this.width)}, 0)`)
-      .call(
-        d3.axisRight(this.dayScale)
-          .ticks(5)
-          .tickFormat(d3.timeFormat('%H:%M')),
-      );
+    const mapEventToY = map((event: MouseEvent) => event.clientY);
 
-    merge(
-      this.data$,
-      interval(1000).pipe(map( () => this.dataCache )),
+    this.click$ = fromEvent(this.element.nativeElement, 'click')
+      .pipe(mapEventToY);
+    this.mouseMove$ = fromEvent(this.element.nativeElement, 'mousemove')
+      .pipe(mapEventToY);
+
+    this.mouseLeave$ = fromEvent(this.element.nativeElement, 'mouseleave');
+    this.status$ = this.statusService.status$.pipe(
+      filter(status => status.date === 'Now'),
+      mapTo(this.margin.top),
+    );
+    this.markerPosition$ = merge(
+      this.click$,
+      this.status$
     )
-      .subscribe(data => this.render(data));
+      .pipe(
+        startWith(this.margin.top),
+        mergeMap(y => (
+          merge(this.mouseMove$.pipe(startWith(y)), this.mouseLeave$.pipe(mapTo(y)))
+        )),
+        filter(y => y >= this.margin.top),
+      );
+
+    this.markerDate$ = this.markerPosition$.pipe(
+      map(y => (y - this.margin.top || 0)),
+      startWith(0),
+      map((y: any) => this.currentScale.invert(y)),
+    );
+
+    this.zoomMarkerPosition$ = this.zoom$
+      .pipe(
+        withLatestFrom(this.markerDate$, (zoom, date) => date),
+        map((date) => (this.currentScale(date) + this.margin.top)),
+        map(y => y < this.margin.top ? this.margin.top : y),
+      );
+    this.translate$ = merge(this.markerPosition$, this.zoomMarkerPosition$)
+      .pipe(
+        startWith(this.margin.top),
+        map(y => `translateY(${y}px)`),
+      );
+
+    this.markerText$ = this.markerDate$.pipe(
+      map(date => (date.getTime() > Date.now() ? new Date() : date)),
+      map(date => moment(date).fromNow()),
+      map(text => ['Invalid date', 'a few seconds ago', 'in a few seconds'].includes(text) ? 'Now' : text),
+      distinctUntilChanged(),
+      startWith('Now'),
+    );
+
+    const zoomSub = this.zoom$
+      .pipe(
+        withLatestFrom(this.data$, (zoomTransform, data) => ({ zoomTransform, data})),
+      )
+      .subscribe(({ zoomTransform, data }) => this.scaleRender(data, zoomTransform));
+    this.subscription.add(zoomSub);
+
+    const dataSub = merge(
+      this.data$,
+      interval(1000, animationFrame).pipe(
+        withLatestFrom(this.data$, (time, data) => data)
+      ),
+    )
+      .subscribe(data => {
+        this.dataRender(data);
+        this.scaleRender(data);
+      });
+    this.subscription.add(dataSub);
+    this.moveTo(15, 0);
+  }
+
+  moveTo(scale, x = 0, y = 0) {
+    this.gZoom.call(
+      this.zoom.transform,
+      d3.zoomIdentity.scale(scale).translate(x, y),
+    );
   }
 
   get data$() {
@@ -231,116 +236,48 @@ export class TimeLineComponent implements OnInit, OnDestroy {
             return acc;
           }, [])
         )),
-        tap(data => this.dataCache = data),
       );
   }
 
-  getDateByPosition(y) {
-    const scale = [this.minuteScale, this.hourScale, this.dayScale]
-      .find((scaleItem) => {
-        const [max, min] = scaleItem.range();
-        return max >= y && min <= y;
+  findTickStart(tick, index, data, scale = this.scale) {
+    const nexTick = data[index + 1];
+    return nexTick ? scale(tick.date) : 0;
+  }
+
+  findTickEnd(tick, index, data, scale = this.scale) {
+    const nexTick = data[index + 1];
+    const position = nexTick ? scale(nexTick.date) : scale(tick.date);
+    return position < 0 ? 0 : position;
+  }
+
+  scaleRender(data: Array<ITick>, zoomTransform?: any) {
+    if (zoomTransform) {
+      this.currentScale = zoomTransform.rescaleY(this.scale);
+    }
+    // update axes
+    this.gAxis
+      .call(this.axis.scale(this.currentScale));
+    // update bars
+    this.svg.selectAll('.bar')
+      .transition()
+      .duration(300)
+      .attrs({
+        y1: (tick, index) => this.findTickStart(tick, index, data, this.currentScale) || 0,
+        y2: (tick, index) => this.findTickEnd(tick, index, data, this.currentScale) || 0,
+        x1: this.margin.left,
+        x2: this.margin.left,
       });
-    if (!scale) {
-      return null;
-    }
-    return scale.invert(y);
   }
 
-  tickScale(date) {
-    const diff = Date.now() - date;
-    if (diff <= 1000 * 60) {
-      return this.minuteScale(date);
-    }
-    if (diff <= 1000 * 60 * 60) {
-      return this.hourScale(date);
-    }
-    return this.dayScale(date);
-  }
-
-  findTickStart(tick, index, data) {
-    const nexTick = data[index + 1];
-    return nexTick ? this.tickScale(tick.date) : 0;
-  }
-
-  findTickEnd(tick, index, data) {
-    const nexTick = data[index + 1];
-    return nexTick ? this.tickScale(nexTick.date) : this.tickScale(tick.date);
-  }
-
-  render(data: Array<ITick>) {
-    this.minuteScale.domain(this.minuteScaleDomain);
-    this.hourScale.domain(this.hourScaleDomain);
-    this.dayScale.domain(this.dayScaleDomain);
-
-    this.svg.select('.minuteScale')
-      // .interrupt()
-      // .transition(this.transition)
-      .call(
-        d3.axisRight(this.minuteScale)
-          .ticks(2)
-          .tickFormat(d3.timeFormat('%H:%M:%S')),
-      );
-
-    this.svg.select('.hourScale')
-      // .interrupt()
-      // .transition(this.transition)
-      .call(
-        d3.axisRight(this.hourScale)
-          .ticks(3)
-          .tickFormat(d3.timeFormat('%H:%M')),
-      );
-
-    this.svg.select('.dayScale')
-      // .interrupt()
-      // .transition(this.transition)
-      .call(
-        d3.axisRight(this.dayScale)
-          .ticks(5)
-          .tickFormat(d3.timeFormat('%H:%M')),
-      );
-
+  dataRender(data: Array<ITick>) {
+    this.scale.domain(this.scaleDomain);
     const update = this.svg.selectAll('.bar')
       .data(data, d => d.date);
 
-    update
-      .exit()
-      // .interrupt()
-      // .transition(this.transition)
-      .attrs({
-        y1: (tick, index, bars) => bars[index].getAttribute('y2'),
-      })
-      .remove();
-
-    update
-      // .interrupt()
-      // .transition(this.transition)
-      // .delay(500)
-      .attrs({
-        y1: (tick, index) => this.findTickStart(tick, index, data),
-        y2: (tick, index) => this.findTickEnd(tick, index, data),
-        x1: this.margin.left,
-        x2: this.margin.left,
-      });
-
-    update
-      .enter()
+    update.exit().remove();
+    update.enter()
       .append('line')
-      .attrs({
-        y1: (tick, index) => this.findTickEnd(tick, index, data),
-        y2: (tick, index) => this.findTickEnd(tick, index, data),
-        x1: this.margin.left,
-        x2: this.margin.left,
-      })
-      // .interrupt()
-      // .transition(this.transition)
-      .attrs({
-        class: tick => `bar ${tick.data ? 'playing' : 'idle'}`,
-        y1: (tick, index) => this.findTickStart(tick, index, data),
-        y2: (tick, index) => this.findTickEnd(tick, index, data),
-        x1: this.margin.left,
-        x2: this.margin.left,
-      });
+      .attr('class', tick => `bar ${tick.data ? 'playing' : 'idle'}`);
   }
 
   ngOnDestroy() {
