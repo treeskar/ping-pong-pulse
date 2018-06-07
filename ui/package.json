@@ -11,7 +11,8 @@
     "ssl": "ng serve --ssl true --ssl-cert 'ssl/server.crt' --ssl-key 'ssl/server.key'",
     "build": "ng build",
     "build:prod": "ng build --prod --build-optimizer --aot",
-    "test": "ng test",
+    "test": "ng test --code-coverage",
+    "coverage": "cat ./coverage/lcov.info | coveralls",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "icon-gen": "rm -rf ./src/assets/favicon && icon-gen -i ./src/assets/favicon.svg -t svg -o ./src/assets/favicon -r"
@@ -48,6 +49,7 @@
     "@types/moment": "^2.13.0",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.2.1",
+    "coveralls": "^3.0.1",
     "icon-gen": "^1.2.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",

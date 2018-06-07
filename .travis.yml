@@ -1,0 +1,11 @@
+sudo: required
+dist: trusty
+cache: yarn
+language: node_js
+node_js:
+  - "8.11.2"
+before_install:
+    # starting a GUI to run tests, per https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start
+script: "ci-script.sh"
