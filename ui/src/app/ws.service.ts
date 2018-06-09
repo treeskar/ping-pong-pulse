@@ -5,6 +5,7 @@ import { merge } from 'rxjs/observable/merge';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { WebSocketSubject } from 'rxjs/observable/dom/WebSocketSubject';
+import { WindowRefService } from './window-ref.service';
 const { version } = require('../../../package.json'); // tslint:disable-line no-var-requires
 
 const GAME_STATUS_MODES = {
@@ -17,13 +18,14 @@ const GAME_STATUS_MODES = {
 })
 export class WSService {
 
+  webSocketSubject$: WebSocketSubject<any>;
   status$: BehaviorSubject<{ value: string, date: string }>;
   pulse$: Observable<string>;
   ws$: Subject<any>;
   pastStatus$: Subject<{ value: string, date: string }>;
   latestPulse: string;
 
-  constructor() {
+  constructor(private windowRef: WindowRefService ) {
     this.pastStatus$ = new Subject();
     this.ws$ = new Subject();
 
@@ -40,7 +42,7 @@ export class WSService {
     // Update page when new version released
     this.ws$
       .pipe(filter((payload) => payload.cmd === 'VERSION' && payload.value !== version))
-      .subscribe(() => window.location.reload());
+      .subscribe(() => this.windowRef.nativeWindow.location.reload());
 
     this.status$ = new BehaviorSubject({ value: 'idle', date: 'Now' });
     merge(
@@ -58,9 +60,10 @@ export class WSService {
 
   establishConnection() {
     const protocol = location.protocol.replace('http', 'ws');
-    const wsSubscription = new WebSocketSubject(`${protocol}//${location.host}/ws`)
+    this.webSocketSubject$ = new WebSocketSubject(`${protocol}//${location.host}/ws`);
+    const wsSubscription = this.webSocketSubject$
       .subscribe(
-        ({ payload }) => { this.ws$.next(payload); },
+        ({ payload }) => this.ws$.next(payload),
         (error) => {
           wsSubscription.unsubscribe();
           setTimeout(() => {
