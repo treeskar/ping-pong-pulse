@@ -9,7 +9,7 @@ export class FeedbackComponent implements OnInit {
 
   @Input() email: string;
   @Input() subject = 'Ping Pong Pulse: feature request/bug report';
-  @Input() cc: '';
+  @Input() cc = '';
 
   link: string;
 
