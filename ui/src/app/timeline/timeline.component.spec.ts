@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TimeLineComponent } from './timeline.component';
@@ -17,6 +18,7 @@ describe('TimeLineComponent', () => {
         { provide: TimeLineService, useValue: timeLineServiceMock },
         { provide: WSService, useValue: WSServiceMock },
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));

@@ -24,25 +24,26 @@ describe('WSService', () => {
   it('update Version', () => {
     const windowRef = TestBed.get(WindowRefService);
     spyOn(windowRef.nativeWindow.location, 'reload');
-    wSService.ws$.next({ cmd: 'VERSION', value: 'new' });
+    wSService.ws$.next({ cmd: 'VERSION', data: 'new' });
     expect(windowRef.nativeWindow.location.reload).toHaveBeenCalled();
   });
 
   it('set GAME_STATUS', () => {
     const spyFn = { init: () => {} };
     spyOn(spyFn, 'init');
-    wSService.status$.next({ date: 'Now', value: 'idle' });
+    wSService.status$.next({ date: 'Now', data: 'idle' });
     wSService.status$.subscribe(spyFn.init);
     wSService.ws$.next({ cmd: 'GAME_STATUS', value: 'yes' });
-    expect(spyFn.init).toHaveBeenCalledWith({ date: 'Now', value: 'playing' });
+    expect(spyFn.init).toHaveBeenCalledWith({ date: 'Now', data: 'playing' });
   });
 
   it('set status', () => {
     const spyFn = { init: () => {} };
-    const tick = { date: '01/01/2017', value: 'idle'};
+    const tick = { date: '01/01/2017', data: 'idle'};
     spyOn(spyFn, 'init');
-    wSService.pastStatus$.subscribe(spyFn.init);
-    wSService.setStatus(tick.date, tick.value);
+    wSService.ws$.next({ cmd: 'GAME_STATUS', value: 'no' });
+    wSService.setStatus(tick.date, tick.data);
+    wSService.status$.subscribe(spyFn.init);
     expect(spyFn.init).toHaveBeenCalledWith(tick);
   });
 
