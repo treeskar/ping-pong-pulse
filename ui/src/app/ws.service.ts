@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, filter } from 'rxjs/operators';
+import { map, filter, withLatestFrom } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { merge } from 'rxjs/observable/merge';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -19,14 +19,13 @@ const GAME_STATUS_MODES = {
 export class WSService {
 
   webSocketSubject$: WebSocketSubject<any>;
-  status$: BehaviorSubject<{ value: string, date: string }>;
-  pulse$: Observable<string>;
+  status$: BehaviorSubject<{ data: string, date: string }>;
+  pulse$: Observable<{ data: string, date: string }>;
   ws$: Subject<any>;
-  pastStatus$: Subject<{ value: string, date: string }>;
-  latestPulse: string;
+  setStatus$: Subject<{ data: string, date: string }>;
 
   constructor(private windowRef: WindowRefService ) {
-    this.pastStatus$ = new Subject();
+    this.setStatus$ = new Subject();
     this.ws$ = new Subject();
 
     this.establishConnection();
@@ -34,9 +33,10 @@ export class WSService {
     this.pulse$ = this.ws$
       .pipe(
         filter((payload) => payload.cmd === 'GAME_STATUS'),
-        map((payload) => {
-          return GAME_STATUS_MODES[payload.value];
-        }),
+        map((payload) => ({
+          date: 'Now',
+          data: GAME_STATUS_MODES[payload.value],
+        })),
       );
 
     // Update page when new version released
@@ -44,13 +44,12 @@ export class WSService {
       .pipe(filter((payload) => payload.cmd === 'VERSION' && payload.value !== version))
       .subscribe(() => this.windowRef.nativeWindow.location.reload());
 
-    this.status$ = new BehaviorSubject({ value: 'idle', date: 'Now' });
+    this.status$ = new BehaviorSubject({ data: 'idle', date: 'Now' });
     merge(
-      this.pulse$.pipe(
-        filter((status) => this.status$.getValue().date === 'Now'),
-        map(value => ({ value, date: 'Now' })),
+      this.pulse$,
+      this.setStatus$.pipe(
+        withLatestFrom(this.pulse$, (tick, pulse) => tick.date === 'Now' ? pulse : tick),
       ),
-      this.pastStatus$,
     ).subscribe(
       (status) => {
         this.status$.next(status);
@@ -73,7 +72,7 @@ export class WSService {
       );
   }
 
-  setStatus(date, value: string = this.latestPulse) {
-    this.pastStatus$.next({ date, value });
+  setStatus(date, data: string = this.status$.value.data) {
+    this.setStatus$.next({ date, data });
   }
 }
