@@ -1,3 +1,6 @@
-<div class="marker" [ngStyle]="{transform: translate$ | async}">
+<div class="marker" [ngStyle]="{transform: translateMarker$ | async}">
   <span class="label">{{markerText$ | async}}</span>
 </div>
+<button *ngIf="showResetButton$ | async" [@flyInOut] class="reset-button" (click)="reset()">
+  <app-icon-reset></app-icon-reset>
+</button>

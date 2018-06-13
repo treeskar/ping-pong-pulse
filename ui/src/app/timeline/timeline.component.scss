@@ -7,8 +7,8 @@ app-timeline {
   bottom: 0;
   left: 0;
   width: 85px;
-  overflow: hidden;
   background: rgba(0,0,0,.05);
+  user-select: none;
 
   svg {
     cursor: pointer;
@@ -94,4 +94,67 @@ app-timeline {
   cursor: move;
   fill: none;
   pointer-events: all;
+}
+
+.reset-button {
+  $button-size: 50px;
+  position: absolute;
+  bottom: 5px;
+  left: 100%;
+  border: none;
+  background: rgba(255,255,255,.1);
+  width: $button-size;
+  height: $button-size;
+  border-radius: 50%;
+  display: flex;
+  padding: 0;
+  box-shadow: 0 0 3px rgba(0,0,0,.3);
+  cursor: pointer;
+  outline: none;
+  opacity: 0.6;
+  transform: scale(1) translate(10%, -10%);
+  transform-origin: center;
+  transition-duration: .3s, .3s, .1s;
+  transition-timing-function: linear;
+  transition-property: opacity, box-shadow, transform;
+
+  &:before {
+    display: block;
+    content: 'Reset';
+    background: rgba(0,0,0,.8);
+    color: #ffffff;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 200;
+    padding: 0 10px;
+    line-height: 2;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 0);
+    transition: .3s linear transform, .3s linear opacity;
+    opacity: 0;
+  }
+
+  &:hover,
+  &:focus {
+    opacity: 0.9;
+    box-shadow: 0 0 5px rgba(0,0,0,.3);
+  }
+
+  &:hover:before {
+    transform: translate(-50%, -115%);
+    opacity: 1;
+  }
+
+  &:active {
+    transform: scale(0.95) translate(10%, -10%);
+  }
+
+  app-icon-reset {
+    width: $button-size * 0.7;
+    height: $button-size * 0.7;
+    display: block;
+    margin: auto;
+  }
 }

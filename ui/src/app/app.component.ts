@@ -18,7 +18,7 @@ export class AppComponent {
   constructor(public statusService: WSService) {
     this.status$ = statusService.status$
       .pipe(
-        pluck('value'),
+        pluck('data'),
         startWith('loading'),
       );
 
