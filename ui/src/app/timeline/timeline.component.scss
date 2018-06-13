@@ -114,9 +114,7 @@ app-timeline {
   opacity: 0.6;
   transform: scale(1) translate(10%, -10%);
   transform-origin: center;
-  transition-duration: .3s, .3s, .1s;
-  transition-timing-function: linear;
-  transition-property: opacity, box-shadow, transform;
+  transition: .3s linear opacity, .3s linear box-shadow, .1s linear transform;
 
   &:before {
     display: block;
