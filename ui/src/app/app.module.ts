@@ -12,6 +12,7 @@ import { PingStatusPipe } from './ping-status.pipe';
 import { environment } from '../environments/environment';
 import { TimelineLabelComponent } from './timeline-label/timeline-label.component';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { IconResetComponent } from './icon-reset/icon-reset.component';
 
 const providers = [];
 if (!environment.production) {
@@ -29,6 +30,7 @@ if (!environment.production) {
     PingStatusPipe,
     TimelineLabelComponent,
     FeedbackComponent,
+    IconResetComponent,
   ],
   imports: [
     BrowserModule,
