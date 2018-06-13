@@ -1,3 +1,27 @@
+<a name="0.1.16"></a>
+## <small>0.1.16 (2018-06-13)</small>
+
+* [*] CI: move coveralls report to after-success phase ([ef379bd](http://crgitep:7999/hac/pingpongpulse/commits/ef379bd))
+* [*] UI: css autoprefix fix ([e488eb9](http://crgitep:7999/hac/pingpongpulse/commits/e488eb9))
+* [*] UI: fix travis script phase ([9847db4](http://crgitep:7999/hac/pingpongpulse/commits/9847db4))
+* [*] UI: fix unit test ([f963d92](http://crgitep:7999/hac/pingpongpulse/commits/f963d92))
+* [*] UI: improve unit tests coverage ([996af65](http://crgitep:7999/hac/pingpongpulse/commits/996af65))
+* [*] UI: improve unit tests coverage ([04be6a6](http://crgitep:7999/hac/pingpongpulse/commits/04be6a6))
+* [*] UI: initiate unit tests and mocks ([35bab95](http://crgitep:7999/hac/pingpongpulse/commits/35bab95))
+* [*] UI: minor refactor of WSService ([9bea29d](http://crgitep:7999/hac/pingpongpulse/commits/9bea29d))
+* [*] UI: time line component refactor ([271323a](http://crgitep:7999/hac/pingpongpulse/commits/271323a))
+* [*] UI: timeline component refactor (The end) ([e222e1c](http://crgitep:7999/hac/pingpongpulse/commits/e222e1c))
+* [*] UI: travis CI configuration ([d86ccec](http://crgitep:7999/hac/pingpongpulse/commits/d86ccec))
+* [*] UI: update page title ([0076873](http://crgitep:7999/hac/pingpongpulse/commits/0076873))
+* [+] add "open issues" badge and project's description to readme file ([9b1941c](http://crgitep:7999/hac/pingpongpulse/commits/9b1941c))
+* [+] Add MIT License ([beb25ee](http://crgitep:7999/hac/pingpongpulse/commits/beb25ee))
+* [+] Add readme file ([7ae6e4f](http://crgitep:7999/hac/pingpongpulse/commits/7ae6e4f))
+* [+] Add Travis build status badge to readme file ([db3d846](http://crgitep:7999/hac/pingpongpulse/commits/db3d846))
+* [+] UI: add icon-reset component ([42cd1fb](http://crgitep:7999/hac/pingpongpulse/commits/42cd1fb))
+* [=] ansible playbook.retry from git tracking ([4311694](http://crgitep:7999/hac/pingpongpulse/commits/4311694))
+
+
+
 <a name="0.1.15"></a>
 ## <small>0.1.15 (2018-05-25)</small>
 
