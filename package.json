@@ -1,7 +1,7 @@
 {
   "name": "ping-pong-pulse",
   "version": "0.1.15",
-  "description": "",
+  "description": "Application provides status information on Ping Pong table occupation",
   "main": "index.js",
   "scripts": {
     "start": "sh scripts/start-dev.sh",
