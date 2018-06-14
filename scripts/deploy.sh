@@ -13,7 +13,7 @@ cd ../
 echo "Building UI v${VERSION}"
 cd ui
 rm -rf dist/*
-ng build --prod --build-optimizer --aot
+node_modules/.bin/ng build --prod --build-optimizer --aot
 cd ../docker
 
 # rebuild containers
