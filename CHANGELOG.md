@@ -1,3 +1,10 @@
+<a name="0.1.17"></a>
+## <small>0.1.17 (2018-06-14)</small>
+
+* [*] Deploy: :bug: fix deploy/prod build scripts ([d581392](http://crgitep:7999/hac/pingpongpulse/commits/d581392))
+
+
+
 <a name="0.1.16"></a>
 ## <small>0.1.16 (2018-06-13)</small>
 
