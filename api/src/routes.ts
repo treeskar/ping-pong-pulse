@@ -74,4 +74,4 @@ apiRoutes.post('/authenticate', authenticateController);
 apiRoutes.post('/pulse', savePulseController);
 apiRoutes.get('/stats', getStatsController);
 
-export { apiRoutes }
+export { apiRoutes, authenticateController, savePulseController, getStatsController }
