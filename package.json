@@ -10,6 +10,7 @@
     "release:minor": "bumped release minor && npm run deploy",
     "release:main": "bumped release main && npm run deploy",
     "deploy": "sh scripts/deploy.sh",
+    "coverage": "sh scripts/coverage.sh",
     "generate:ssl-cert": "sh scripts/generate-ssl-cert.sh tlvhcktnvw01l"
   },
   "repository": {
@@ -21,6 +22,10 @@
   "devDependencies": {
     "bumped": "^0.10.10",
     "bumped-changelog": "^0.3.10",
-    "bumped-terminal": "^0.7.3"
+    "bumped-terminal": "^0.7.3",
+    "istanbul-combine": "^0.3.0"
+  },
+  "dependencies": {
+    "coveralls": "^3.0.1"
   }
 }

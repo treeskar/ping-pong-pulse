@@ -7,3 +7,4 @@ dist
 node_modules
 vault-password
 ansible/playbook.retry
+coverage
