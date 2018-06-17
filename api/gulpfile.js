@@ -27,7 +27,6 @@ gulp.task('compile', ['lint'], () => {
 gulp.task('test', ['lint'], () => {
   return gulp.src('src/**/*.spec.ts')
     .pipe(tsProject())
-    .pipe(gulp.dest('dist'))
     .pipe(mocha({
       reporter: TEST_REPORT,
       exit: true,
