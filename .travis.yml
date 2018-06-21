@@ -1,6 +1,5 @@
 sudo: required
 dist: trusty
-cache: yarn
 language: node_js
 node_js:
   - "8.11.2"
