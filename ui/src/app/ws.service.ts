@@ -64,7 +64,9 @@ export class WSService {
       .subscribe(
         ({ payload }) => this.ws$.next(payload),
         (error) => {
-          wsSubscription.unsubscribe();
+          if (wsSubscription) {
+            wsSubscription.unsubscribe();
+          }
           setTimeout(() => {
             this.establishConnection();
           }, 1000 * 30);

@@ -1,7 +1,7 @@
 cd api
 npm i
 cd ../ui
-yarn
+npm i
 cd ../
 docker-compose -p pingpongpulsedev -f docker/docker-compose-dev.yml up -d --build
 cd ui

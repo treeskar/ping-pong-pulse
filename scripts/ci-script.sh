@@ -5,6 +5,8 @@ cd api
 npm i
 npm test
 cd ../ui
-yarn
+npm i
 npm test
+npm run build:prod
+npm run integration:test
 cd ../
