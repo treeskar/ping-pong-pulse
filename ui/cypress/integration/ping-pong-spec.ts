@@ -9,7 +9,11 @@ describe('The Ping Pong Pulse', () => {
   });
 
   it('successfully loads', () => {
-    cy.get('.title').should('contain', 'Ping Png pulse');
+    cy.get('.column-content').screenshot('content', {
+      afterScreenshot() {
+        cy.get('.title').should('contain', 'Ping Png pulse');
+      }
+    });
   });
 
   it('test playing event', () => {

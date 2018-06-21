@@ -1,5 +1,6 @@
 const cypress = require('cypress');
 const LocalWebServer = require('local-web-server');
+const analyseScreenshots = require('./validate-screenshots');
 
 const localWebServer = new LocalWebServer();
 const server = localWebServer.listen({
@@ -10,4 +11,9 @@ const server = localWebServer.listen({
 });
 
 const methodType = process.env.NODE_ENV === 'DEV' ? 'open' : 'run';
-cypress[methodType]({ key: process.env.CYPRESS_RECORD_KEY, record: true }).then(() => server.close());
+const options = process.env.CYPRESS_RECORD_KEY ? { key: process.env.CYPRESS_RECORD_KEY, record: true } : {};
+cypress[methodType](options)
+  .then(() => {
+    server.close();
+    return analyseScreenshots();
+  });

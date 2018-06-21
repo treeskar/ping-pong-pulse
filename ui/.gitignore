@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 mochawesome-report
+cypress/screenshots
 
 # dependencies
 /node_modules
