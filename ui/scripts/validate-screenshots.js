@@ -1,7 +1,10 @@
+const version = require('../package').version;
 const fs = require('fs-extra');
 const chalk = require('chalk');
 const Eyes = require('eyes.images').Eyes;
 const ConsoleLogHandler = require('eyes.images').ConsoleLogHandler;
+
+const buildNumber = process.env.TRAVIS_BUILD_NUMBER ? ` (${process.env.TRAVIS_BUILD_NUMBER})` : '';
 
 // Initialize the eyes SDK and set your private API key.
 function analyseScreenshots() {
@@ -17,7 +20,7 @@ function analyseScreenshots() {
     .then((files) => {
       const tasks = files.map((fileName) => (
         fs.readFile(`cypress/screenshots/${fileName}`)
-          .then(img => eyes.checkImage(img, fileName))
+          .then(img => eyes.checkImage(img, `${fileName} ${version}${buildNumber}`))
           .then(({ asExpected }) => {
             if (!asExpected) {
               const msg = chalk.yellow(`${fileName}: didn't match to original`);
@@ -32,4 +35,4 @@ function analyseScreenshots() {
     .then((results) => console.log(results));
 }
 
-module.exports = analyseScreenshots
+module.exports = analyseScreenshots;
