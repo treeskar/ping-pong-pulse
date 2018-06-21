@@ -15,7 +15,7 @@
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "integration:test": "PORT=8080 CYPRESS_RECORD_KEY=$CYPRESS_RECORD_KEY node scripts/run-cypress-test",
+    "integration:test": "PORT=8080 node scripts/run-cypress-test",
     "integration:test:dev": "PORT=8080 NODE_ENV=DEV node scripts/run-cypress-test",
     "icon-gen": "rm -rf ./src/assets/favicon && icon-gen -i ./src/assets/favicon.svg -t svg -o ./src/assets/favicon -r"
   },

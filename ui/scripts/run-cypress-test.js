@@ -10,4 +10,4 @@ const server = localWebServer.listen({
 });
 
 const methodType = process.env.NODE_ENV === 'DEV' ? 'open' : 'run';
-cypress[methodType]({ key: process.env.CYPRESS_RECORD_KEY }).then(() => server.close());
+cypress[methodType]({ key: process.env.CYPRESS_RECORD_KEY, record: true }).then(() => server.close());
