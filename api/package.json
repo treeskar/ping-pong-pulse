@@ -8,12 +8,12 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "gulp test",
+    "test": "mocha --exit --reporter=list --require=ts-node/register src/**/*.spec.ts",
+    "test:report": "mocha --exit --reporter=mochawesome --require=ts-node/register src/**/*.spec.ts",
+    "test:watch": "mocha --exit --watch --reporter=list --require=ts-node/register src/**/*.spec.ts",
     "coverage": "nyc mocha --exit src/**/*.spec.ts",
-    "test:report": "REPORT=mochawesome gulp test",
     "build": "gulp compile",
     "watch": "gulp watch",
-    "test:watch": "gulp test:watch",
     "api-logs": "docker logs -f pingpongpulsedev_api_1"
   },
   "author": "",
