@@ -36,7 +36,7 @@ moment.updateLocale('en', {
   }
 });
 
-interface ITick {
+export interface ITick {
   data: boolean;
   date: number;
 }
@@ -260,7 +260,7 @@ export class TimeLineComponent implements OnInit, OnDestroy {
         scan((acc, data) => (
           Array.isArray(data) ? data : [...acc, data]
         ), []),
-        map((data) => (
+        map((data: Array<ITick>) => (
           data.reduce((acc, tick) => (
             !acc[acc.length - 1] || acc[acc.length - 1].data !== tick.data ? [...acc, tick] : acc
           ), [])

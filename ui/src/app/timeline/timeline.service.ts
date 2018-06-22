@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { publish } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TimeLineService {
 
-  public data$: Observable<any>;
+  public data$: any;
 
   constructor(private http: HttpClient) {
-    this.data$ = this.http
-      .get(`/api/stats?range=24`);
+    this.data$ = this.http.get(`/api/stats?range=24`).pipe(publish());
+    this.data$.connect();
   }
 }
