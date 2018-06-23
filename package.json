@@ -11,7 +11,8 @@
     "release:main": "bumped release main && npm run deploy",
     "deploy": "sh scripts/deploy.sh",
     "coverage": "sh scripts/coverage.sh",
-    "generate:ssl-cert": "sh scripts/generate-ssl-cert.sh tlvhcktnvw01l"
+    "generate:ssl-cert": "sh scripts/generate-ssl-cert.sh tlvhcktnvw01l",
+    "commit": "git-cz"
   },
   "repository": {
     "type": "git",
@@ -23,9 +24,17 @@
     "bumped": "^0.10.10",
     "bumped-changelog": "^0.3.10",
     "bumped-terminal": "^0.7.3",
-    "istanbul-combine": "^0.3.0"
+    "commitizen": "^2.10.1",
+    "cz-conventional-changelog": "^2.1.0",
+    "istanbul-combine": "^0.3.0",
+    "semantic-release": "^15.6.0"
   },
   "dependencies": {
     "coveralls": "^3.0.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
