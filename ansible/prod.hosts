@@ -1,2 +1,2 @@
 [app]
-ppp ansible_ssh_host=10.196.0.49 ansible_user=dima
+ppp ansible_ssh_host=10.196.0.41 ansible_user=dima
