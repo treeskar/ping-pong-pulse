@@ -2,13 +2,13 @@
 
 <ng-template #currentStatus>
   <p class="status-label" i18n="The current status label@@statusLabel">Current status</p>
-  <span class="game-status" >{{ status | pingStatus }}</span>
+  <span class="game-status" [ngClass]="status">{{ status | pingStatus }}</span>
 </ng-template>
 
 <ng-template #previousStatus>
   <p class="status-label">
     The status at <time class="status-time">{{date}}</time> was:
   </p>
-  <span class="game-status">{{ status | pingStatus }}</span>
+  <span class="game-status" [ngClass]="status">{{ status | pingStatus }}</span>
   <button (click)="goBack()" class="button">Back</button>
 </ng-template>

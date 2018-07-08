@@ -11,6 +11,17 @@
   font-size: 24px;
   margin: 0 0 15px;
   font-family: $defaultFontFamily;
+  color: #fff;
+  padding: 5px 10px;
+  transition: .5s linear background-color;
+
+  &.playing {
+    background-color: $playing-color;
+  }
+
+  &.idle {
+    background-color: $idle-color;
+  }
 }
 
 .status-time {

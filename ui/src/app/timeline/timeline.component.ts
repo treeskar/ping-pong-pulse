@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { TimeLineService } from './timeline.service';
 import { merge } from 'rxjs/observable/merge';
@@ -52,6 +52,7 @@ interface IZoomTransform {
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('flyInOut', [
       state('*', style({
