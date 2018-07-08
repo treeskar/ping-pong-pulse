@@ -1,3 +1,26 @@
+<a name="0.1.18"></a>
+## <small>0.1.18 (2018-07-08)</small>
+
+* :new: E2E test with cypress + integration this flow with CI ([bcec6a5](http://crgitep:7999/hac/pingpongpulse/commits/bcec6a5))
+* [-] UI: remove yarn ([4bafff9](http://crgitep:7999/hac/pingpongpulse/commits/4bafff9))
+* [*] API: run test scripts from package.json without gulp ([472391e](http://crgitep:7999/hac/pingpongpulse/commits/472391e))
+* [*] CI: add package version and build number to applitools recognition tasks ([1400f3f](http://crgitep:7999/hac/pingpongpulse/commits/1400f3f))
+* [*] CI: fix API test in CI environment ([7f01545](http://crgitep:7999/hac/pingpongpulse/commits/7f01545))
+* [*] CI: fix CI scripts, use CYPRESS_RECORD_KEY variable from TravisCI settings ([42f1451](http://crgitep:7999/hac/pingpongpulse/commits/42f1451))
+* [*] Deploy: change production ssh_host ([56a23fe](http://crgitep:7999/hac/pingpongpulse/commits/56a23fe))
+* [*] UI, CI: :bug: fix TS definition of cypress test ([3b24f0a](http://crgitep:7999/hac/pingpongpulse/commits/3b24f0a))
+* [*] UI: :bug: fix double api request (/stats) issue ([d5e5849](http://crgitep:7999/hac/pingpongpulse/commits/d5e5849))
+* [*] UI: fix unit test of Timeline.service ([368b916](http://crgitep:7999/hac/pingpongpulse/commits/368b916))
+* [*] UI: Game status style improvments ([3ec69b9](http://crgitep:7999/hac/pingpongpulse/commits/3ec69b9))
+* [+] API: add unit test and code coverage ([6277ee1](http://crgitep:7999/hac/pingpongpulse/commits/6277ee1))
+* [+] Deploy: merge ui & api code coverage reports and deploy to coveralls ([ec9e54e](http://crgitep:7999/hac/pingpongpulse/commits/ec9e54e))
+* [+] UI, CI: integrate Applitools to CI flow ([e7e0cc5](http://crgitep:7999/hac/pingpongpulse/commits/e7e0cc5))
+* [+] UI: print "Coverage summary" after ng test ([f0d4008](http://crgitep:7999/hac/pingpongpulse/commits/f0d4008))
+* [=] API: gulp test fix ([678aab9](http://crgitep:7999/hac/pingpongpulse/commits/678aab9))
+* feat: Add Commitizen with conventional-changelog formatter ([ec04bb1](http://crgitep:7999/hac/pingpongpulse/commits/ec04bb1))
+
+
+
 <a name="0.1.17"></a>
 ## <small>0.1.17 (2018-06-14)</small>
 
