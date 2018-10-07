@@ -84,8 +84,11 @@ app-timeline {
       font-size: 10px;
       padding: 0 5px;
       color: $axisColor;
-      font-family: Arial, sans-serif;
-      background-color: #eee;
+      font-family: sans-serif;
+      color: #ddd;
+      line-height: 1.7;
+      background-color: rgba(0,0,0,.8);
+      font-weight: 300;
     }
   }
 }
