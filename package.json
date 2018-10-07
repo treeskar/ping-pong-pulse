@@ -1,6 +1,6 @@
 {
   "name": "ping-pong-pulse",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "Application provides status information on Ping Pong table occupation",
   "main": "index.js",
   "scripts": {

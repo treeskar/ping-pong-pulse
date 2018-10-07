@@ -1,3 +1,10 @@
+<a name="0.1.19"></a>
+## <small>0.1.19 (2018-10-07)</small>
+
+* :pencil: minor tune of timelne marker label ([5410225](http://crgitep:7999/hac/pingpongpulse/commits/5410225))
+
+
+
 <a name="0.1.18"></a>
 ## <small>0.1.18 (2018-07-08)</small>
 
