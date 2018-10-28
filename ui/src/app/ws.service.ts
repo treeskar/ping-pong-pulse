@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map, filter, withLatestFrom } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
-import { merge } from 'rxjs/observable/merge';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subject } from 'rxjs/Subject';
+import { Observable ,  merge ,  BehaviorSubject ,  Subject } from 'rxjs';
 import { WebSocketSubject } from 'rxjs/observable/dom/WebSocketSubject';
 import { WindowRefService } from './window-ref.service';
 const { version } = require('../../../package.json'); // tslint:disable-line no-var-requires

@@ -7,7 +7,7 @@ const server = localWebServer.listen({
   port: process.env.PORT || 8080,
   directory: 'dist/ui',
   spa: 'index.html',
-  websocket: 'scripts/websocket-mock-server.js'
+  websocket: './scripts/websocket-mock-server.js'
 });
 
 const methodType = process.env.NODE_ENV === 'DEV' ? 'open' : 'run';

@@ -1,14 +1,8 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { TimeLineService } from './timeline.service';
-import { merge } from 'rxjs/observable/merge';
-import { interval } from 'rxjs/observable/interval';
-import { combineLatest } from 'rxjs/observable/combineLatest';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import { merge ,  interval ,  combineLatest ,  Subscription ,  Observable ,  Subject ,  fromEvent } from 'rxjs';
 import { animationFrame } from 'rxjs/scheduler/animationFrame';
-import { Subject } from 'rxjs/Subject';
-import { fromEvent } from 'rxjs/observable/fromEvent';
 import { scan, map, withLatestFrom, mapTo, mergeMap, filter, startWith, distinctUntilChanged, tap, debounceTime } from 'rxjs/operators';
 import * as moment from 'moment';
 import * as d3 from 'd3';
@@ -126,7 +120,7 @@ export class TimeLineComponent implements OnInit, OnDestroy {
     );
     this.handleClick(click$, data$);
     this.handleMarkerReset(zoom$);
-    const markerPosition$ = this.getMarkerPositionStream(click$);
+    const markerPosition$ = this.getMarkerPositionStream(click$) as Observable<number>;
     const markerDate$ = this.getMarkerDateStream(markerPosition$);
     this.translateMarker$ = this.getTranslateMarkerStream(markerPosition$, zoom$, markerDate$);
     this.markerText$ = this.getMarkerTextStream(markerDate$);

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { startWith, pluck } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { startWith, pluck, map } from 'rxjs/operators';
 
 import { WSService } from './ws.service';
 
@@ -18,13 +18,13 @@ export class AppComponent {
   constructor(public statusService: WSService) {
     this.status$ = statusService.status$
       .pipe(
-        pluck('data'),
+        map(({ data }) => data),
         startWith('loading'),
-      );
+      ) as Observable<string>;
 
     this.date$ = statusService.status$.pipe(
-      pluck('date'),
+      map(({ date }) => date),
       startWith('Now'),
-    );
+    ) as Observable<string>;
   }
 }
