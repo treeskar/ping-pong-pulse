@@ -1,3 +1,10 @@
+<a name="0.1.20"></a>
+## <small>0.1.20 (2018-10-28)</small>
+
+* [*] UI: migration to Angular 7 ([5e51f81](http://crgitep:7999/hac/pingpongpulse/commits/5e51f81))
+
+
+
 <a name="0.1.19"></a>
 ## <small>0.1.19 (2018-10-07)</small>
 
